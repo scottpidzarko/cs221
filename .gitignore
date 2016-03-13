@@ -27,4 +27,9 @@
 *.out
 *.app
 
+# xcode who knows what
+*.d
+
 Notes_from_Piazza.txt
+
+solve
