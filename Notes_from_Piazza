@@ -1,0 +1,14 @@
+You *CAN* use the following:
+=============================
+-No, you can't change the interface that's given to you -- edit: apparently you can. Alan is more generous than I would be :)
+    (Alan's Addition:  Wait... you can't change the interface, in that the public methods and member variables must remain as specified.  But you ARE allowed to change private parts of the classes.)
+-Helper functions from the binary heap lab template
+
+You *CANNOT* use the following:
+=======================================
+vectors for heaps (see lecture for trick)
+
+push_back, pop_back, erase, etc. are all fine (but not for the ArrayQueue, where you have to implement the queue yourself using a normal array, not the C++ STL vector class).
+Basically, for the HeapPriorityQueue, you're just not allowed to use anything that's specifically provided to give you heap operations.
+
+ Not allowed to use make_heap, push_heap, and pop_heap

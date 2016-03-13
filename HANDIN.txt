@@ -1,30 +1,30 @@
-Student Name #1: TODO:
-Student ugrad login #1: TODO:
+Student Name #1: Scott Pidzarko:
+Student ugrad login #1: w2p8:
 
 Student Name #2: TODO:
 Student ugrad login #2: TODO:
 
-Team name (for fun!): TODO:
+Team name (for fun!): Lonely Sad Project Times:
 
 Acknowledgment that you understand and have followed the course's
 collaboration policy
 (http://www.ugrad.cs.ubc.ca/~cs221/current/syllabus.shtml#conduct):
 
-TODO: [[Put your names here again as a signature]]
+Scott Pidzarko: [[Put your names here again as a signature]]
 
-TODO: submit using: make handin-proj1
-
-----------------------------------------------------------------------
-
-Approximate hours on project: TODO:
+Scott Pidzarko: submit using: make handin-proj1
 
 ----------------------------------------------------------------------
 
-For teams, rough breakdown of work: TODO:
+Approximate hours on project: 3:
 
 ----------------------------------------------------------------------
 
-Acknowledgment of assistance: TODO:
+For teams, rough breakdown of work: I did all of it because I couldn't find a partner ( :/ ):
+
+----------------------------------------------------------------------
+
+Acknowledgment of assistance: N/A:
 
 ----------------------------------------------------------------------
 
