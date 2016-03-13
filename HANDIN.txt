@@ -1,0 +1,69 @@
+Student Name #1: TODO:
+Student ugrad login #1: TODO:
+
+Student Name #2: TODO:
+Student ugrad login #2: TODO:
+
+Team name (for fun!): TODO:
+
+Acknowledgment that you understand and have followed the course's
+collaboration policy
+(http://www.ugrad.cs.ubc.ca/~cs221/current/syllabus.shtml#conduct):
+
+TODO: [[Put your names here again as a signature]]
+
+TODO: submit using: make handin-proj1
+
+----------------------------------------------------------------------
+
+Approximate hours on project: TODO:
+
+----------------------------------------------------------------------
+
+For teams, rough breakdown of work: TODO:
+
+----------------------------------------------------------------------
+
+Acknowledgment of assistance: TODO:
+
+----------------------------------------------------------------------
+
+Questions:
+
+For the explanations, generally a sentence or two should be enough.
+Type your answers directly in this file.
+
+
+1.  Edit solve.cpp to use either of your queue classes to solve Mazes
+1, 2, 3, and 4.  Set a large enough delay in the solveMaze function
+(like 200000) to watch what's happening.  Do you see why this is called
+breadth-first search (BFS)?  How many steps long were your solutions?
+How does this compare with DFS?
+
+TODO:
+
+2.  Try to solve the blank Sudoku board using your ArrayQueue
+and LinkedListQueue classes.  What happens?  Why?
+
+TODO:
+
+3.  Switch to the medium-difficulty Sudoku problem, and comment
+out the delay and the print statements in the solveMaze function.
+How long does it take to solve the puzzle using your ArrayQueue
+class?  Using your LinkedListQueue class?  Is the difference big?
+
+TODO:
+
+4.  Edit solve.cpp to switch to the 4x4 and then 5x5 slider puzzles.
+Make sure to comment out the delay and print statements in the solveMaze
+function.  How long does it take to solve these puzzles with your
+HeapPriorityQueue versus my UnsortedPriorityQueue?  For most students,
+mine will be faster?  Why might that happen?  Are the asymptotic
+runtimes for the heap versus the unsorted array wrong?
+
+TODO:
+
+----------------------------------------------------------------------
+
+We will be checking your implementations of ArrayQueue, LinkedListQueue,
+and HeapPriorityQueue.
