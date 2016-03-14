@@ -107,7 +107,7 @@ void Hashtable::qinsert(int k) {
     // and calls tallyProbes, so if it gets here, it didn't find an EMPTY slot
 		tallyProbes(probeNum);
     _numFailures += 1;
-    cout << "Warning: qinsert(" << k << ") found no EMPTY slot, so no insert was done." << endl;
+	//    cout << "Warning: qinsert(" << k << ") found no EMPTY slot, so no insert was done." << endl;
 }
 
 void Hashtable::linsert(int k) {
@@ -149,7 +149,7 @@ void Hashtable::linsert(int k) {
     // and calls tallyProbes, so if it gets here, it didn't find an EMPTY slot
 		tallyProbes(probeNum);
     _numFailures += 1;
-    cout << "Warning: linsert(" << k << ") found no EMPTY slot, so no insert was done." << endl;
+    //cout << "Warning: linsert(" << k << ") found no EMPTY slot, so no insert was done." << endl;
 }
 
 void Hashtable::dinsert(int k) {
@@ -194,7 +194,7 @@ void Hashtable::dinsert(int k) {
 	  // and calls tallyProbes, so if it gets here, it didn't find an EMPTY slot
 		tallyProbes(probeNum);
     _numFailures += 1;
-    cout << "Warning: dinsert(" << k << ") found no EMPTY slot, so no insert was done." << endl;
+    //cout << "Warning: dinsert(" << k << ") found no EMPTY slot, so no insert was done." << endl;
 }
 
 void Hashtable::print() {
