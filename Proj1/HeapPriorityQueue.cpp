@@ -24,14 +24,15 @@ MazeState * HeapPriorityQueue::remove() {
   assert(!is_empty());
 
   MazeState * ret = heap[0];
-  if( heap.size == 0)
+  if( heap.size() == 0)
     return ret;
 
-  heap[0] = heap[heap.size - 1];
+  heap[0] = heap[heap.size() - 1];
   heap.pop_back();
 
   bubble_down(0);
 
+  return ret;
 }
 
 bool HeapPriorityQueue::is_empty() {
@@ -64,17 +65,10 @@ int HeapPriorityQueue::num_children(int index) {
 //Doesn't assume that the vector has already been heapified for stability, with a performance
 // impact as a result
 void HeapPriorityQueue::min_heapify( void ){
-  vector<MazeState* > newVector;
-  vector<MazeState* > oldVector;
 
 
 
-  heap = newVector;
-
-  //~newVector();
-  //~oldVector();
 }
-
 void HeapPriorityQueue::bubble_up(int index){
     if(index == 0)
       return;
@@ -104,10 +98,13 @@ void HeapPriorityQueue::bubble_down(int index){
     min_index = right_child_index;
 
   //swap
-  if( min_index != index)
+  if( min_index != index) {
     MazeState* temp = heap[index];
     heap[index] = heap[min_index];
     heap[min_index] = temp;
     bubble_down(min_index);
+  }
+  return;
 }
+
 #endif
