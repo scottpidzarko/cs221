@@ -21,23 +21,26 @@ ArrayQueue::ArrayQueue()
   // Constructor: initialize member variables
   //              and do any other initialization
   //              needed (if any)
-  // TODO: implement constructor
+
+  array = new MazeState*[INIT_SIZE];
+  capacity = INIT_SIZE;
 }
 
 void ArrayQueue::add(MazeState *elem)
 {
-  // TODO: implement add method
+  //see https://piazza.com/class/iiwgamavl8931g?cid=454 => we're sticking with the +1 convention
   if ((tail+1) % (capacity+1) == head) {
     // queue is full
     ensure_capacity(capacity+1); // ensure_capacity makes grows the array.
   }
 
-  // Your code goes here...
+  tail++;
+  array[tail] = elem;
+  return; 
 }
 
 MazeState *ArrayQueue::remove()
 {
-  // TODO: implement remove method
   assert(!is_empty());
   MazeState *temp = array[head];
   head = (head+1) % (capacity+1);
@@ -46,7 +49,6 @@ MazeState *ArrayQueue::remove()
 
 bool ArrayQueue::is_empty()
 {
-  // TODO: implement is_empty method
   return (head==tail);
 }
 
@@ -70,7 +72,7 @@ void ArrayQueue::ensure_capacity(int n)
 
 ArrayQueue::~ArrayQueue()
 {
-  // TODO: implement the destructor
+  delete [] array;
 }
 
 #endif

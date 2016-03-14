@@ -15,65 +15,50 @@ LinkedListQueue::LinkedListQueue()
 
 void LinkedListQueue::add(MazeState *elem)
 {
-
-  if(tail == NULL){
-    printf( "Warning: LinkedListQueue is Empty, no element is returned")
-    return NULL;
-  }
-  else{
-    node* temp = new node;
-    temp->data = elem;
-    temp->next = NULL;
-
-    if(front == NULL)
-      front = temp;
-    else{
-      rear->next = temp;
-    }
-
-    rear = temp;
-
-    delete temp;
-    size++;
+  std::cout << "Adding to LinkedListQueue" << std::endl;
+  size++;
+  if(is_empty() == true){
+    std::cout << "LinkedListQueue is Empty" << std::endl;
     return;
   }
 
+  node* temp = new node;
+  temp->data = elem;
+  temp->next = NULL;
+
+  if(head == NULL){
+    head = tail = temp;
+    tail-> next = NULL;
+  }
+  else{
+    tail->next = temp;
+    tail = temp;
+    tail->next = NULL;
+  }
+
+  return;
 }
 
 MazeState *LinkedListQueue::remove()
 {
+  std::cout << "removing from LinkedListQueue" << std::endl;
+  assert(head != NULL);
+  MazeState *ret = head->data;
+  node* temp = head->next;
+  delete head;
+  head = temp;
 
-  MazeState *tempState  = new MazeState;
-
-  if(head == NULL){
-    printf( "Warning: LinkedListQueue is Empty, no element is returned")
-    return NULL;
-  }else{
-    node* temp = new node;
-
-    //Grab the pointer to the head of the queue;
-    temp = head;
-
-    //Grab the data at the head of the queue so that we can return it later
-    tempState = temp->data;
-
-    //make the head of the array the next element
-    head = head->next;
-
-    //cleanup and return
-    delete temp;
-    size--;
-    return tempState;
-  }
-
+  size--;
+  return ret;
 }
 
 bool LinkedListQueue::is_empty()
 {
-  if ((size == 0) && (head == NULL) && (tail == NULL))
-    return TRUE;
+  if ((size == 0))
+    return true;
   else
-    return FALSE;
+    return false;
+
 }
 
 LinkedListQueue::~LinkedListQueue()
