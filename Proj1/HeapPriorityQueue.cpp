@@ -23,19 +23,14 @@ void HeapPriorityQueue::add(MazeState *elem) {
 MazeState * HeapPriorityQueue::remove() {
   assert(!is_empty());
 
-  if (heap.size() < 1)
-    return (MazeState *)NULL;
+  MazeState * ret = heap[0];
+  if( heap.size == 0)
+    return ret;
 
-  int min_index = 0;
+  heap[0] = heap[heap.size - 1];
+  heap.pop_back();
 
-  for (int i = 0; i < (int)heap.size(); i++) {
-    if (heap[i]->getBadness() < heap[min_index]->getBadness())
-      min_index = i;
-  }
-
-  MazeState *ret = heap[min_index];
-  heap.erase(heap.begin() + min_index); // remove list[min_index]
-  return ret;
+  bubble_down(0);
 
 }
 
@@ -80,4 +75,39 @@ void HeapPriorityQueue::min_heapify( void ){
   //~oldVector();
 }
 
+void HeapPriorityQueue::bubble_up(int index){
+    if(index == 0)
+      return;
+    int parent_index = parent(index)
+    if((heap[parent_index])->getBadness() > (heap[index])->getBadness){
+      MazeState* temp = heap[parent_index];
+      heap[parent_index)] = heap[index];
+      bubble_up(parent_index)
+    }
+}
+
+void HeapPriorityQueue::bubble_down(int index){
+  int length = heap.size();
+  int left_child_index = first_child(index);
+  int right_child_index = left_child_index + 1;
+
+  //index is a leaf so we don't need to do anything
+  if(is_leaf(index) == true)
+    return;
+
+  int min_index = index;
+
+  if((heap[index])->getBadness() > (heap[left_child_index])->getBadness() )
+    min_index = left_child_index;
+
+  if(( right_child_index < length ) && ((heap[min_index])->getBadness() > (heap[right_child_index])->getBadness() )
+    min_index = right_child_index;
+
+  //swap
+  if( min_index != index)
+    MazeState* temp = heap[index];
+    heap[index] = heap[min_index];
+    heap[min_index] = temp;
+    bubble_down(min_index);
+}
 #endif
