@@ -72,11 +72,11 @@ void HeapPriorityQueue::min_heapify( void ){
 void HeapPriorityQueue::bubble_up(int index){
     if(index == 0)
       return;
-    int parent_index = parent(index)
-    if((heap[parent_index])->getBadness() > (heap[index])->getBadness){
+    int parent_index = parent(index);
+    if((heap[parent_index])->getBadness() > (heap[index])->getBadness()){
       MazeState* temp = heap[parent_index];
-      heap[parent_index)] = heap[index];
-      bubble_up(parent_index)
+      heap[parent_index] = heap[index];
+      bubble_up(parent_index);
     }
 }
 
@@ -94,7 +94,7 @@ void HeapPriorityQueue::bubble_down(int index){
   if((heap[index])->getBadness() > (heap[left_child_index])->getBadness() )
     min_index = left_child_index;
 
-  if(( right_child_index < length ) && ((heap[min_index])->getBadness() > (heap[right_child_index])->getBadness() )
+  if(( right_child_index < length ) && ((heap[min_index])->getBadness() > (heap[right_child_index])->getBadness() ) )
     min_index = right_child_index;
 
   //swap
