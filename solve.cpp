@@ -173,8 +173,8 @@ int main ()
   // implementations (ArrayQueue, LinkedListQueue, or HeapPriorityQueue).
   //ArrayStack activeStates;
   //LinkedListStack activeStates;
-  //ArrayQueue activeStates;
-  LinkedListQueue activeStates;
+  ArrayQueue activeStates;
+  //LinkedListQueue activeStates;
   //UnsortedPriorityQueue activeStates;
   //HeapPriorityQueue activeStates;
 

@@ -13,7 +13,7 @@ class ArrayQueue: public BagOfMazeStates
 {
  public:
   ArrayQueue(); // constructor
-  
+
   // BagOfMazeStates interface
   void add(MazeState *elem);
   MazeState *remove();
@@ -31,7 +31,7 @@ class ArrayQueue: public BagOfMazeStates
   MazeState **array;
 
   // TODO: list additional private member variables here,
-  static const int INIT_SIZE = 5;
+  static const int INIT_SIZE = 50;
 
   // index of the head of the queue.
   int head;
