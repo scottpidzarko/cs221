@@ -18,7 +18,11 @@ HeapPriorityQueue::~HeapPriorityQueue() {
 void HeapPriorityQueue::add(MazeState *elem) {
   heap.push_back(elem);
 
-  bubble_up(heap.size() - 1);
+  //make into a heap
+  for(int i = 0; i < heap.size(); --i){
+    bubble_down(i);
+  }
+  //bubble_up(heap.size() - 1);
 }
 
 MazeState * HeapPriorityQueue::remove() {
@@ -97,7 +101,7 @@ void HeapPriorityQueue::bubble_down(int index){
   if((heap[index])->getBadness() > (heap[left_child_index])->getBadness() )
     min_index = left_child_index;
 
-  if(( right_child_index < length ) && ((heap[min_index])->getBadness() > (heap[right_child_index])->getBadness() ) )
+  if(( right_child_index < length ) && ((heap[min_index])->getBadness() < (heap[right_child_index])->getBadness() ) )
     min_index = right_child_index;
 
   //swap
@@ -107,7 +111,6 @@ void HeapPriorityQueue::bubble_down(int index){
     heap[min_index] = temp;
     bubble_down(min_index);
   }
-  return;
 }
 
 #endif

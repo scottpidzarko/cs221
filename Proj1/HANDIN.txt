@@ -79,6 +79,9 @@ It would be fair to say that the instructor will likely produce a faster program
 I got 7.282s for the runtime of a 4x4 slider puzzle with the unsorted Priority Queue; and 2m 36.292s for the 5x5 puzzle with the UnsortedPriorityQueue;
 With the HeapPriorityQueuem I got a time of ___ for the 4x4 slider and ____ for the 5x5 slider.
 
+The asymptotic runtimes are due to the complexity of the problem rising - I predict that the function for the "badness" of a route starts to break down or become ineffective
+with this type of puzzle at this large a size. I predict more variance in the time as well with the 4x4 and 5x5 puzzle.
+
 
 ----------------------------------------------------------------------
 
