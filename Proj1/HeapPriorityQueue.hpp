@@ -38,7 +38,6 @@ class HeapPriorityQueue : public BagOfMazeStates
     int first_child(int index);
     int num_children(int index);
     bool is_leaf(int index);
-    void min_heapify( void );
     void bubble_up(int index);
     void bubble_down(int index);
 

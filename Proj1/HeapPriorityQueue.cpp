@@ -17,7 +17,8 @@ HeapPriorityQueue::~HeapPriorityQueue() {
 
 void HeapPriorityQueue::add(MazeState *elem) {
   heap.push_back(elem);
-  min_heapify();
+
+  bubble_up(heap.size() - 1);
 }
 
 MazeState * HeapPriorityQueue::remove() {
@@ -64,18 +65,20 @@ int HeapPriorityQueue::num_children(int index) {
 //so you can shove an element in, and call min heapify, and call it a day
 //Doesn't assume that the vector has already been heapified for stability, with a performance
 // impact as a result
-void HeapPriorityQueue::min_heapify( void ){
 
-
-
-}
 void HeapPriorityQueue::bubble_up(int index){
     if(index == 0)
       return;
+    if(index <= 0){
+      std::cout << "Index less than 0 in bubble_up" << std::endl;
+      return;
+    }
+
     int parent_index = parent(index);
-    if((heap[parent_index])->getBadness() > (heap[index])->getBadness()){
+    if((heap[parent_index])->getBadness() < (heap[index])->getBadness()){
       MazeState* temp = heap[parent_index];
       heap[parent_index] = heap[index];
+      heap[index] = temp;
       bubble_up(parent_index);
     }
 }

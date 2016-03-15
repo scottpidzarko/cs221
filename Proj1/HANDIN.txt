@@ -4,7 +4,7 @@ Student ugrad login #1: w2p8:
 Student Name #2: N/A:
 Student ugrad login #2: N/A:
 
-Team name (for fun!): In which I have to relearn so many OO C++ concepts:
+Team name (for fun!): Lone Wolf
 
 Acknowledgment that you understand and have followed the course's
 collaboration policy
@@ -16,15 +16,15 @@ Scott Pidzarko: submit using: make handin-proj1
 
 ----------------------------------------------------------------------
 
-Approximate hours on project: 15:
+Approximate hours on project: 15
 
 ----------------------------------------------------------------------
 
-For teams, rough breakdown of work: I did all of it because I couldn't find a partner ( :/ ):
+For teams, rough breakdown of work: I did all of it because I couldn't find a partner ( :/ )
 
 ----------------------------------------------------------------------
 
-Acknowledgment of assistance: N/A:
+Acknowledgment of assistance: N/A
 
 ----------------------------------------------------------------------
 
@@ -77,12 +77,7 @@ runtimes for the heap versus the unsorted array wrong?
 It would be fair to say that the instructor will likely produce a faster program because they are better at choosing efficient code.
 
 I got 7.282s for the runtime of a 4x4 slider puzzle with the unsorted Priority Queue; and 2m 36.292s for the 5x5 puzzle with the UnsortedPriorityQueue;
-
-For some strange reason my priority Heap *cannot* seem to recognize that it's in a solution with slider puzzles - even when it's there it doesn't recognize that it's solved.
-
-We compare instead the runtime of the medium soduku problem, which took 11.841 seconds on the priorityHeap, and 28 seconds with the unsorted Priority Queue. This implies that the priority Queue is actually
-aster, which makes sense as it's sorted. Therefore the HeapPriorityQueue method is better and faster for Suduku puzzles, just slightly worse for mazes, and really really awful at slider puzzles
-(I let it run for a long long time without a solution).
+With the HeapPriorityQueuem I got a time of ___ for the 4x4 slider and ____ for the 5x5 slider.
 
 
 ----------------------------------------------------------------------

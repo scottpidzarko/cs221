@@ -148,7 +148,7 @@ int main ()
   //startState = new TextMaze(21,41, "                                                                                                                                                                                                                                                                                                                                                                                                                                                   $                                                                                                                                                                                                                                                                                                                                                                                                                                        ",10,20);
 
   //  Maze 4:  This one frustrates BestFS
-  startState = new TextMaze(21,41,"                                          XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                        X XXXXXXXXXX                             X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X$",10,20);
+  //startState = new TextMaze(21,41,"                                          XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                        X XXXXXXXXXX                             X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X$",10,20);
 
 
   // This is an empty Sudoku grid:
@@ -163,7 +163,7 @@ int main ()
 
   //startState = new SliderPuzzle(2,2,"3 2 1 0");
   //startState = new SliderPuzzle(3,3,"8 7 6 5 4 3 2 1 0");
-  //startState = new SliderPuzzle(4,4,"15 14 13 12 11 10 9 8 7 6 5 4 3 1 2 0");
+  startState = new SliderPuzzle(4,4,"15 14 13 12 11 10 9 8 7 6 5 4 3 1 2 0");
   //startState = new SliderPuzzle(5,5,"24 23 22 21 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0");
 
   //startState = new SliderPuzzle(3,3,"8 7 6 5 4 3 1 2 0"); // Unsolvable
