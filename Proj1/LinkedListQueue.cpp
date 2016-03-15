@@ -15,7 +15,7 @@ LinkedListQueue::LinkedListQueue()
 
 void LinkedListQueue::add(MazeState *elem)
 {
-  std::cout << "Adding to LinkedListQueue" << std::endl;
+  //std::cout << "Adding to LinkedListQueue" << std::endl;
   size++;
   if(is_empty() == true){
     std::cout << "LinkedListQueue is Empty" << std::endl;
@@ -41,7 +41,7 @@ void LinkedListQueue::add(MazeState *elem)
 
 MazeState *LinkedListQueue::remove()
 {
-  std::cout << "removing from LinkedListQueue" << std::endl;
+  //std::cout << "removing from LinkedListQueue" << std::endl;
   assert(head != NULL);
   MazeState *ret = head->data;
   node* temp = head->next;

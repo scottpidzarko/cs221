@@ -78,9 +78,9 @@ void solveMaze(MazeState *start, BagOfMazeStates &active, PredDict &seen) {
     // the algorithm is doing.
     // 221 STUDENTS:  Comment these out when you want the program to
     // run at full speed!
-    //cout << "Exploring State: \n";
-    //state->print(cout);
-    //usleep(200000);	// Pause for some microseconds, to let human read output
+    cout << "Exploring State: \n";
+    state->print(cout);
+    //usleep(250000);	// Pause for some microseconds, to let human read output
 
     if (state->isSolution()) {
       // Found a solution!
@@ -148,19 +148,20 @@ int main ()
   //startState = new TextMaze(21,41, "                                                                                                                                                                                                                                                                                                                                                                                                                                                   $                                                                                                                                                                                                                                                                                                                                                                                                                                        ",10,20);
 
   //  Maze 4:  This one frustrates BestFS
-  //startState = new TextMaze(21,41,"                                          XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                        X XXXXXXXXXX                             X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X$",10,20);
+  startState = new TextMaze(21,41,"                                          XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                        X XXXXXXXXXX                             X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X                                        X$",10,20);
 
 
   // This is an empty Sudoku grid:
   //startState = new Sudoku("000000000000000000000000000000000000000000000000000000000000000000000000000000000");
 
   // This is a medium difficulty problem:
-  startState = new Sudoku("167000000050600047000300009641057000800060005000980716700008000490006050000000671");
+  //startState = new Sudoku("167000000050600047000300009641057000800060005000980716700008000490006050000000671");
 
   // And this next one is a really easy Sudoku...
   //startState = new Sudoku("927430008060000097008000402000308005400060003800201000602000300790000080500089271");
 
 
+  //startState = new SliderPuzzle(2,2,"3 2 1 0");
   //startState = new SliderPuzzle(3,3,"8 7 6 5 4 3 2 1 0");
   //startState = new SliderPuzzle(4,4,"15 14 13 12 11 10 9 8 7 6 5 4 3 1 2 0");
   //startState = new SliderPuzzle(5,5,"24 23 22 21 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0");

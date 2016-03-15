@@ -1,10 +1,10 @@
 Student Name #1: Scott Pidzarko:
 Student ugrad login #1: w2p8:
 
-Student Name #2: TODO:
-Student ugrad login #2: TODO:
+Student Name #2: N/A:
+Student ugrad login #2: N/A:
 
-Team name (for fun!): Lonely Sad Project Times:
+Team name (for fun!): In which I have to relearn so many OO C++ concepts:
 
 Acknowledgment that you understand and have followed the course's
 collaboration policy
@@ -16,7 +16,7 @@ Scott Pidzarko: submit using: make handin-proj1
 
 ----------------------------------------------------------------------
 
-Approximate hours on project: 3:
+Approximate hours on project: 15:
 
 ----------------------------------------------------------------------
 
@@ -40,19 +40,32 @@ Type your answers directly in this file.
 breadth-first search (BFS)?  How many steps long were your solutions?
 How does this compare with DFS?
 
-TODO:
+I see why it's called Breadth-First Search - it would go equally far in each path on the maze until one of them got to a solution. It took a lot longer time in comparison to DFS,
+but the trade-off was that it could theoretically get a shorter route: My solution with BFS was 58 steps long with Maze 1, 14 steps with Maze 2, 5 steps with Maze 3, and 90 steps with Maze four.
+
+Depth First search had different behaviour - - it transverses as deep within a path as it can on the maze, then tries another path at the earliest unexplored state,
+and then repeats the process going as deep as it can. Depth First Search had a solution that was 58 steps long with Maze 1, 46 steps with Maze 2, 247 steps with Maze 3, and 110 steps with Maze four. It executed quicker, but didn't find as short route. :
+
+With the exception of Maze 3, which was specifically optimized to work well with BFS, DFS was consistently faster but yielded a longer path to the finish. We can see the trade-offs then in general between
+BFS and DFS are clear and that each of them has a place, depending on how many times we'll need to find the finish of the maze.  :
 
 2.  Try to solve the blank Sudoku board using your ArrayQueue
 and LinkedListQueue classes.  What happens?  Why?
 
-TODO:
+The solver literally tries every single possible state that can exist for the Soduku board. This happens because that's how BFS works - it tries every state until it gets it methodically, which can take longer,
+but this yields the fastest route to a solution by incrementing through the states "in order".
 
 3.  Switch to the medium-difficulty Sudoku problem, and comment
 out the delay and the print statements in the solveMaze function.
 How long does it take to solve the puzzle using your ArrayQueue
 class?  Using your LinkedListQueue class?  Is the difference big?
 
-TODO:
+Using ArrayQueue, it took 55.327 (real) seconds.
+
+Using LinkedListQueue, it took 55.988 (real) seconds.
+
+This difference is tiny and trivial - it's small enough that my CPU might just have been busier for this than when I ran ArrayQueue (I have a
+few background processes going for my dev environment for work).
 
 4.  Edit solve.cpp to switch to the 4x4 and then 5x5 slider puzzles.
 Make sure to comment out the delay and print statements in the solveMaze
@@ -61,7 +74,16 @@ HeapPriorityQueue versus my UnsortedPriorityQueue?  For most students,
 mine will be faster?  Why might that happen?  Are the asymptotic
 runtimes for the heap versus the unsorted array wrong?
 
-TODO:
+It would be fair to say that the instructor will likely produce a faster program because they are better at choosing efficient code.
+
+I got 7.282s for the runtime of a 4x4 slider puzzle with the unsorted Priority Queue; and 2m 36.292s for the 5x5 puzzle with the UnsortedPriorityQueue;
+
+For some strange reason my priority Heap *cannot* seem to recognize that it's in a solution with slider puzzles - even when it's there it doesn't recognize that it's solved.
+
+We compare instead the runtime of the medium soduku problem, which took 11.841 seconds on the priorityHeap, and 28 seconds with the unsorted Priority Queue. This implies that the priority Queue is actually
+aster, which makes sense as it's sorted. Therefore the HeapPriorityQueue method is better and faster for Suduku puzzles, just slightly worse for mazes, and really really awful at slider puzzles
+(I let it run for a long long time without a solution).
+
 
 ----------------------------------------------------------------------
 
