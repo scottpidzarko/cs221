@@ -170,31 +170,32 @@ void doubleRotateRight( Node *& a ) {
 void balance( Node *& x ) {
 
 // TODO : write this function
+
+  //error catching
   if( x == NULL ){
     std::cout << "Node passed to balance is NULL" << std::endl;
     return;
   }
 
-  if( x.left.height > x.right.height){
-  // the left child is within one of the right child, don't have to do anything
-    if( (x.left.height) == (x.right.height + 1){
-      return;
-    }
-    else{
+  int bf = (x->right->height) - (x->left->height);
 
-    }
-  }
-
-  if( (x.left.height) < (x.right.height)){
+  //node is balanced, don't need to do anything
+  if ( abs(bf) <= 1){
     return;
   }
-    if( (x.left.height + 1 ) == x.right.height){
-      return;
-    }
 
+  if ( bf = 2){
+    rotateLeft(x);
   }
-
-  return;
+  else if ( bf = -2){
+    rotateRight(x);
+  }
+  else if(bf > 2){
+    doubleRotateRight(x);
+  }
+  else if(bf < 2){
+    doubleRotateLeft(x);
+  }
 }
 
 // ********** DO NOT CHANGE BELOW HERE ****************
