@@ -177,14 +177,20 @@ void balance( Node *& x ) {
     return;
   }
 
-  Node * right = x->right;
-  Node * left = x->left;
+  if(x->right != NULL){
+    int rightHeight = x->right->height;
+  } else{
+    rightHeight = 0;
+  }
+  if(x->left != NULL){
+    int leftHeight = x->left->height;
+  } else{
+    leftHeight = 0;
+  }
+    int bf = rightHeight - leftHeight;
+  //std::cout << right->height << std::endl;
+  //std::cout << left->height << std::endl;
 
-  //int bf = (right->height) - (left->height);
-  int bf = 1;
-  std::cout << right->height << std::endl;
-  std::cout << left->height << std::endl;
-  
   //node is balanced, don't need to do anything
   if ( abs(bf) <= 1){
     return;
