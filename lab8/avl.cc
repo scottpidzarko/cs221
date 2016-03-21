@@ -180,8 +180,11 @@ void balance( Node *& x ) {
   Node * right = x->right;
   Node * left = x->left;
 
-  int bf = (right->height) - (left->height);
-
+  //int bf = (right->height) - (left->height);
+  int bf = 1;
+  std::cout << right->height << std::endl;
+  std::cout << left->height << std::endl;
+  
   //node is balanced, don't need to do anything
   if ( abs(bf) <= 1){
     return;
