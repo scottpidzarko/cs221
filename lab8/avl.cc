@@ -177,10 +177,10 @@ void balance( Node *& x ) {
     return;
   }
 
-  node * right = x->right;
-  node * left = x->left;
+  Node * right = x->right;
+  Node * left = x->left;
 
-  int bf = (x->right->height) - (x->left->height);
+  int bf = (right->height) - (left->height);
 
   //node is balanced, don't need to do anything
   if ( abs(bf) <= 1){
@@ -188,16 +188,16 @@ void balance( Node *& x ) {
   }
 
   if ( bf == 2){
-    rotateLeft(x);
+    rotateLeft(right);
   }
   else if ( bf == -2){
-    rotateRight(x);
+    rotateRight(left);
   }
   else if(bf > 2){
-    doubleRotateRight(x);
+    doubleRotateRight(left);
   }
   else if(bf < 2){
-    doubleRotateLeft(x);
+    doubleRotateLeft(right);
   }
 }
 
