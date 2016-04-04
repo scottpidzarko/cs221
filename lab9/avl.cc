@@ -7,7 +7,7 @@
 
 #include "Timer.h"
 
-#define REPS 3
+#define REPS 1
 
 typedef std::string KType;
 typedef int VType;
@@ -261,31 +261,30 @@ void findMaxHelper(Node * root, KType & word, VType & count) {
   // Find the max in the left subtree.
   KType lword;
   VType lmax = count;
-  #pragma omp parallel
-  findMaxHelper(root->left, lword, lmax);
-
-  // Find the max in the right subtree.
-  KType rword;
-  VType rmax = count;
-  #pragma omp parallel
-  findMaxHelper(root->right, rword, rmax);
-
+  #pragma omp section
+  {
+    findMaxHelper(root->left, lword, lmax);
+  }
+    // Find the max in the right subtree.
+    KType rword;
+    VType rmax = count;
+  #pragma omp section
+  {
+    findMaxHelper(root->right, rword, rmax);
+  }
   // Record for return the largest of the left-max, right-max, and
   // current node's key/value.
-  #pragma omp taskwait 
-  {
-    if (rmax > lmax && rmax > root->value) {
-      word = rword;
-      count = rmax;
-    }
-    else if (lmax > root->value) {
-      word = lword;
-      count = lmax;
-    }
-    else {
-      word = root->key;
-      count = root->value;
-    }
+  if (rmax > lmax && rmax > root->value) {
+    word = rword;
+    count = rmax;
+  }
+  else if (lmax > root->value) {
+    word = lword;
+    count = lmax;
+  }
+  else {
+    word = root->key;
+    count = root->value;
   }
 }
 
