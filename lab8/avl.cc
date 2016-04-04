@@ -177,13 +177,14 @@ void balance( Node *& x ) {
     return;
   }
 
+int leftHeight, rightHeight;
   if(x->right != NULL){
-    int rightHeight = x->right->height;
+	rightHeight = x->right->height;
   } else{
-    rightHeight = 0;
+	rightHeight = 0;
   }
   if(x->left != NULL){
-    int leftHeight = x->left->height;
+    leftHeight = x->left->height;
   } else{
     leftHeight = 0;
   }
@@ -197,16 +198,16 @@ void balance( Node *& x ) {
   }
 
   if ( bf == 2){
-    rotateLeft(right);
+    rotateLeft(x->right);
   }
   else if ( bf == -2){
-    rotateRight(left);
+    rotateRight(x->left);
   }
   else if(bf > 2){
-    doubleRotateRight(left);
+    doubleRotateRight(x->left);
   }
   else if(bf < 2){
-    doubleRotateLeft(right);
+    doubleRotateLeft(x->right);
   }
 }
 
