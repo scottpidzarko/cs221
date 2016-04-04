@@ -22,10 +22,10 @@ struct Node {
 
 Node* createNode( KType key, VType value, Node* l = NULL, Node* r = NULL ) {
   //
-  // Creates a new Node containing key and value, with 'l' as its left 
+  // Creates a new Node containing key and value, with 'l' as its left
   // child and 'r' as its right child, with height=0
   //
-  // PRE:  key is valid, l points to a Node or is NULL and r 
+  // PRE:  key is valid, l points to a Node or is NULL and r
   //       points to a Node or is NULL
   // POST: If there is enough free memory space, a new Node is created
   //	   and its address is returned; otherwise, NULL is returned.
@@ -44,7 +44,7 @@ void deleteTree( Node*& root ) {
   // Deletes a tree rooted at root
   //
   // PRE:  root is a valid Node address or NULL
-  // POST: All the nodes in the tree rooted at root are deleted and   
+  // POST: All the nodes in the tree rooted at root are deleted and
   //       root is set to NULL.
 
   if ( root != NULL ) {
@@ -186,9 +186,9 @@ void printTreeHelper( Node * r, int d ) {
 //
 // Prints out the tree sideways
 //
-// PRE:  root is a valid Node address 
-// POST: The tree rooted at r is printed in reverse inorder with nodes  
-//       indented 3 * d spaces; this produces a tree that has its root near  
+// PRE:  root is a valid Node address
+// POST: The tree rooted at r is printed in reverse inorder with nodes
+//       indented 3 * d spaces; this produces a tree that has its root near
 //       the left side of the screen and the leaves near the right side
   if( r == NULL ) return;
   printTreeHelper( r->right, d+1 );
@@ -243,7 +243,7 @@ void findMaxSequential(Node * root, KType & word, VType & count) {
 // Postcondition: count is the maximum value in the tree and word
 //                is the key associated with that value
 void findMaxHelper(Node * root, KType & word, VType & count) {
-  // 
+  //
   // Uses divide-and-conquer, fork/join-style parallelism.  Your
   // solution should fork off tasks to handle subtrees until you can
   // guarantee by looking at the root node of a subtree that it has at
@@ -254,7 +254,38 @@ void findMaxHelper(Node * root, KType & word, VType & count) {
   // NOTE: be sure to look at findMax.  It's nothing much.. but it's
   // easy to forget when using OpenMP!
 
-  // TODO: Implement this!
+  if (root == NULL) {
+    return;
+  }
+
+  // Find the max in the left subtree.
+  KType lword;
+  VType lmax = count;
+  #pragma omp parellel
+  findMaxHelper(root->left, lword, lmax);
+
+  // Find the max in the right subtree.
+  KType rword;
+  VType rmax = count;
+  #pragma omp parallel
+  findMaxHelper(root->right, rword, rmax);
+
+  // Record for return the largest of the left-max, right-max, and
+  // current node's key/value.
+  #pragma omp taskwait{
+    if (rmax > lmax && rmax > root->value) {
+      word = rword;
+      count = rmax;
+    }
+    else if (lmax > root->value) {
+      word = lword;
+      count = lmax;
+    }
+    else {
+      word = root->key;
+      count = root->value;
+    }
+  }
 }
 
 
@@ -265,6 +296,7 @@ void findMaxHelper(Node * root, KType & word, VType & count) {
 void findMax(Node * root, KType & word, VType & count) {
   // "Spin up" parallelism for OpenMP.
 #pragma omp parallel
+//parallel followed by single means parallel ahead, but this function only once
 #pragma omp single
   findMaxHelper(root, word, count);
 }
@@ -276,7 +308,7 @@ void usage(const char* program) {
 }
 
 void findMostCommonAndReport(std::function<void(Node*, KType&, VType&)> f,
-			     Node * tree, KType & k, VType & v, 
+			     Node * tree, KType & k, VType & v,
 			     const char * type) {
   KType kdefault = k;
   VType vdefault = v;
@@ -294,7 +326,7 @@ void findMostCommonAndReport(std::function<void(Node*, KType&, VType&)> f,
   std::chrono::duration<double> timeS = time;
   std::cout << type << "\t" << k << "\t" << v << "\t"
 	    << timeS.count() << std::endl;
-  std::cout.flush();  
+  std::cout.flush();
 }
 
 int main( int argc, char *argv[] ) {
