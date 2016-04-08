@@ -43,8 +43,8 @@ class AVLDict : public PredDict
     void doubleRotateLeft(node *& a);
     void doubleRotateRight(node *& a);
     bool contains( MazeState* key, node * root );
-    node* createNode( MazeState* key, node* l = NULL, node* r = NULL );
-    void insert( MazeState* key, node * root);
+    node* createNode( MazeState* key, MazeState* data, node* l = NULL, node* r = NULL );
+    void insert( node* in, node * root);
     void balanceTree(node * d);
   };
 

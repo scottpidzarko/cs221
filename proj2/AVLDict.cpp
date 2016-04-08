@@ -168,7 +168,7 @@ int AVLDict::height( node * x ) {
 }*/
 
 // helper function from avl lab
-AVLDict::node * AVLDict::createNode( MazeState* key, node* l = NULL, node* r = NULL ) {
+AVLDict::node * AVLDict::createNode( MazeState* key, MazeState* data, node* l, node* r) {
   //
   // Creates a new Node containing key, with 'l' as its left
   // child and 'r' as its right child, with height=0
@@ -181,26 +181,31 @@ AVLDict::node * AVLDict::createNode( MazeState* key, node* l = NULL, node* r = N
   node* result = new node;
   if (! result) return (node*) NULL;
   result->key = key;
+  result->data = data;
   result->height = 0;
   result->left = l;
   result->right = r;
   return result;
 }
 
-//this function borrowed from the AVL lab
-void AVLDict::insert( MazeState* key, node * root) {
+//this function borrowed and modified from the AVL lab
+void AVLDict::insert( node* in, node * root) {
   // BASE CASE
   if( root == NULL ) {
-    root = createNode(key);
+    root = in;
     return;
   }
+
+  string keyID = in->key->getUniqId();
+  string rID = root->key->getUniqId();
+
   // either go to the left, or to the right, but ignore if already in tree
-  if( key < root->key ) {
-    insert( key, root->left );
+  if( keyID < rID ) {
+    insert( in, root->left );
   }
   // if key == root->key then ignore it (do not insert duplicate)
-  else if( key > root->key ) {
-    insert( key, root->right );
+  else if( keyID > rID ) {
+    insert( in, root->right );
   }
   // We know: descendant had a child added (in recursive call, above).
   // Now we're "unwinding" the call-stack (returning from the recursive calls,
@@ -214,7 +219,7 @@ void AVLDict::insert( MazeState* key, node * root) {
 // You may assume that no duplicate MazeState is ever added.
 void AVLDict::add(MazeState *key, MazeState *pred) {
 
-  /*//nothing to insert
+  //nothing to insert
   if(key == NULL)
     return;
 
@@ -224,22 +229,26 @@ void AVLDict::add(MazeState *key, MazeState *pred) {
       return;
   }
 
-  newNode = createNode(key);
+  node* newNode = createNode(key, pred);
+  string ID = newNode->key->getUniqId();
+  string rID = root->key->getUniqId();
 
-  if( newNode->badness > pred->badness){
-    add(newNode, pred->left);
+  if( ID > rID){
+    if(root->right == NULL)
+      root->right = newNode;
+    insert(newNode, root->right);
   }
-  else if( newNode->badness > pred->badness){
-    add(newNode, pred->right);
+  else if( ID > rID){
+    if(root->left == NULL)
+      root->left = newNode;
+    insert(newNode, root->left);
   }
 
-
-  if(update_height(pred))
-    balanceTree(pred);
-
-  return;*/
+  return;
 
 }
+
+//done
 void AVLDict::balanceTree(node * d) {
   if( d == NULL)
     return;
