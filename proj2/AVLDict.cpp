@@ -59,6 +59,9 @@ void AVLDict::record_stats(int depth) {
  // Do not delete the object pointed to by pred, as there will
  // still be a pointer to that object inside the dictionary.
 bool AVLDict::find(MazeState * key, MazeState *& pred){
+  if(pred = NULL){
+    std::cout << "null pred" << std::endl;
+  }
   return finder(root, key->getUniqId(), pred, 0);
 }
 
