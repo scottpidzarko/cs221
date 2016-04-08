@@ -142,7 +142,21 @@ std::cout << "*** REHASHING " << size;
 
   // No need to delete the data, as all copied into new table.
 
+  int old_size = size;
+  size_index++;
+  size = primes[size_index]; //muh Invariant
+  bucket *old_table = table;
+  table = new bucket[size]();
+  number = 0;
 
+  for(int k = 0; k < old_size; k++){
+    if (old_table[k].key != NULL){
+      add(old_table[k].key, old_table[k].data);
+    }
+  }
+
+  delete[] old_table;
+  
 // 221 Students:  DO NOT CHANGE OR DELETE THE NEXT FEW LINES!!!
 // And leave this at the end of the rehash() function.
 // We will use this code when marking to be able to watch what
@@ -171,4 +185,4 @@ void DoubleHashDict::add(MazeState *key, MazeState *pred) {
 
 }
 
-#endif 
+#endif

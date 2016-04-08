@@ -264,18 +264,12 @@ void AVLDict::add(MazeState * key, MazeState * pred) {
   if( ID > rID){
     if(root->right == NULL) {
       root->right = newNode;
-      if(update_height(root)) {
-        balanceTree(root);
-      }
-    insert(newNode, root->right);
     }
+    insert(newNode, root->right);
   }
-  else if( ID > rID){
+  else if( ID < rID){
     if(root->left == NULL) {
       root->left = newNode;
-      if(update_height(root)){
-        balanceTree(root);
-      }
     }
     insert(newNode, root->left);
   }

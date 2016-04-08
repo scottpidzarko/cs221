@@ -79,8 +79,8 @@ void solveMaze(MazeState *start, BagOfMazeStates &active, PredDict &seen) {
     // 221 STUDENTS:  Comment these out when you want the program to
     // run at full speed!
     //cout << "Exploring State: \n";
-    //state->print(cout);
-    //usleep(20000);	// Pause for some microseconds, to let human read output
+    state->print(cout);
+    //usleep(30000);	// Pause for some microseconds, to let human read output
 
     if (state->isSolution()) {
       // Found a solution!
@@ -158,12 +158,12 @@ int main ()
   //startState = new Sudoku("167000000050600047000300009641057000800060005000980716700008000490006050000000671");
 
   // And this next one is a really easy Sudoku...
-  //startState = new Sudoku("927430008060000097008000402000308005400060003800201000602000300790000080500089271");
+  startState = new Sudoku("927430008060000097008000402000308005400060003800201000602000300790000080500089271");
 
 
   //startState = new SliderPuzzle(3,3,"8 7 6 5 4 3 2 1 0");
   //startState = new SliderPuzzle(4,4,"15 14 13 12 11 10 9 8 7 6 5 4 3 1 2 0");
-  startState = new SliderPuzzle(5,5,"24 23 22 21 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0");
+  //startState = new SliderPuzzle(5,5,"24 23 22 21 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0");
   //startState = new SliderPuzzle(6,6,"35 34 33 32 31 30 29 28 27 26 25 24 23 22 21 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 1 2 0");
 
   //startState = new SliderPuzzle(3,3,"8 7 6 5 4 3 1 2 0"); // UNSOLVABLE...
@@ -175,9 +175,9 @@ int main ()
   HeapPriorityQueue activeStates;
 
   // 221 STUDENTS:  Uncomment one of these to select which dictionary to use.
-  LinkedListDict seenStates;
+  //LinkedListDict seenStates;
   //AVLDict seenStates;
-  //LinearHashDict seenStates;
+  LinearHashDict seenStates;
   //DoubleHashDict seenStates;
 
   solveMaze(startState, activeStates, seenStates);

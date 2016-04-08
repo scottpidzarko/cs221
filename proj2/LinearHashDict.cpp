@@ -115,7 +115,7 @@ std::cout << "*** REHASHING " << size;
   }
 
   delete[] old_table;
-}
+
 // 221 Students:  DO NOT CHANGE OR DELETE THE NEXT FEW LINES!!!
 // And leave this at the end of the rehash() function.
 // We will use this code when marking to be able to watch what
@@ -145,7 +145,6 @@ bool LinearHashDict::find(MazeState *key, MazeState *&pred) {
         pred = table[target].data;
         return true;
         }
-
       } else {
         position++;
       }
@@ -178,12 +177,11 @@ void LinearHashDict::add(MazeState *key, MazeState *pred) {
         table[target].key = key;
         table[target].data = pred;
         number++;
-        position++;
         return;
-      } else {
-        position++;
-      }
+    } else {
+      position++;
     }
+  }
 
 }
 
