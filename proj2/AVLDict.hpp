@@ -38,10 +38,14 @@ class AVLDict : public PredDict
     // These are helper functions just like in your lab...
     inline int height(node *x) { return (x==NULL) ? -1 : x->height; }
     bool update_height(node *x);
-    void rotate_left(node *&a);
-    void rotate_right(node *&b);
-
+    void rotate_left(node *& a);
+    void rotate_right(node *& b);
+    void doubleRotateLeft(node *& a);
+    void doubleRotateRight(node *& a);
+    bool contains( MazeState* key, node * root );
+    node* createNode( MazeState* key, node* l = NULL, node* r = NULL );
+    void insert( MazeState* key, node * root);
+    void balanceTree(node * d);
   };
 
 #endif
-

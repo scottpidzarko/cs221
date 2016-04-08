@@ -88,11 +88,11 @@ std::cout << "Rotate Left: " << a->getUniqId() << std::endl;
 #endif
 // End of "DO NOT CHANGE" Block
 
-  Node *temp;
+  node *temp;
 
   temp = a->right;
   a->left = temp->left;
-  temp->lleft = a;
+  temp->left = a;
   update_height(a);
   update_height(temp);
   a = temp;
@@ -113,7 +113,7 @@ cout << "Rotate Right: " << b->getUniqId() << endl;
 #endif
 // End of "DO NOT CHANGE" Block
 
-  Node *temp;
+  node* temp;
 
   temp = b->left;
   b->left = temp->right;
@@ -127,19 +127,19 @@ cout << "Rotate Right: " << b->getUniqId() << endl;
 }
 
 //helper function from the avl lab
-void doubleRotateLeft( Node *& a ) {
-  rotateRight(a->right);
-  rotateLeft(a);
+void AVLDict::doubleRotateLeft( node *& a ) {
+  rotate_right(a->right);
+  rotate_left(a);
 }
 
 //helper function from the avl lab
-void doubleRotateRight( Node *& a ) {
-  rotateLeft(a->left);
-  rotateRight(a);
+void AVLDict::doubleRotateRight( node *& a ) {
+  rotate_left(a->left);
+  rotate_right(a);
 }
 
 //helper function from the avl lab
-bool contains( KType key, Node * root ) {
+bool AVLDict::contains( MazeState* key, node * root ) {
   //
   // Return true iff the tree contains the given key.
   //
@@ -157,17 +157,18 @@ bool contains( KType key, Node * root ) {
     return true;
 }
 
+/* DEFINED IN THE .hpp FILE!!
 //helper function from the avl lab
-int height( Node * x ) {
+int AVLDict::height( node * x ) {
   //
   // Returns the height of node x or -1 if x is NULL.
   //
   if( x == NULL ) return -1;
   return x->height;
-}
+}*/
 
 // helper function from avl lab
-Node* createNode( KType key, Node* l = NULL, Node* r = NULL ) {
+AVLDict::node * AVLDict::createNode( MazeState* key, node* l = NULL, node* r = NULL ) {
   //
   // Creates a new Node containing key, with 'l' as its left
   // child and 'r' as its right child, with height=0
@@ -177,8 +178,8 @@ Node* createNode( KType key, Node* l = NULL, Node* r = NULL ) {
   // POST: If there is enough free memory space, a new Node is created
   //	   and its address is returned; otherwise, NULL is returned.
 
-  Node* result = new Node;
-  if (! result) return (Node*) NULL;
+  node* result = new node;
+  if (! result) return (node*) NULL;
   result->key = key;
   result->height = 0;
   result->left = l;
@@ -187,7 +188,7 @@ Node* createNode( KType key, Node* l = NULL, Node* r = NULL ) {
 }
 
 //this function borrowed from the AVL lab
-void AVLDict::insert( KType key, Node * root)
+void AVLDict::insert( MazeState* key, node * root) {
   // BASE CASE
   if( root == NULL ) {
     root = createNode(key);
@@ -205,14 +206,15 @@ void AVLDict::insert( KType key, Node * root)
   // Now we're "unwinding" the call-stack (returning from the recursive calls,
   // one level at a time, until we get to the original call).
   // Do we have to rebalance at this level?
-  if( updateHeight(root) ) balance(root);
+  if( update_height(root) )
+    balanceTree(root);
 }
 
 
 // You may assume that no duplicate MazeState is ever added.
 void AVLDict::add(MazeState *key, MazeState *pred) {
 
-  //nothing to insert
+  /*//nothing to insert
   if(key == NULL)
     return;
 
@@ -222,14 +224,12 @@ void AVLDict::add(MazeState *key, MazeState *pred) {
       return;
   }
 
-  Node * newNode;
-  newNode->key=key;
-  newNode->data=pred;
+  newNode = createNode(key);
 
-  if( newNode->badness? > pred->badness?){
+  if( newNode->badness > pred->badness){
     add(newNode, pred->left);
   }
-  else if( newNode->badness? > pred->badness?){
+  else if( newNode->badness > pred->badness){
     add(newNode, pred->right);
   }
 
@@ -237,40 +237,36 @@ void AVLDict::add(MazeState *key, MazeState *pred) {
   if(update_height(pred))
     balanceTree(pred);
 
-  return;
+  return;*/
 
 }
 void AVLDict::balanceTree(node * d) {
-    if( d == NULL)
-      return;
+  if( d == NULL)
+    return;
 
-  left* = d->left;
-  right* = d->right;
+  node* l = d->left;
+  node* r = d->right;
 
-  int bf = (left->height - right->height);
+  int bf = height(l) - height(r);
 
   //left side is heavy
-  if( bf > 1 )
-    int ldiff = (left->left->height) - (left->right->height);
+  if( bf > 1 ) {
+    int ldiff = height(l->left) - height(l->right);
     if( ldiff < 0) // check if right subtree is heavy
-      //double rotate right
-      rotate_right(d->left);
-      rotate_right(d);
+      doubleRotateRight(d);
     else
       rotate_right(d);
     return;
-
+  }
   //right side is heavy - do opposite of above
-  else if( bf < -1)
-    int rdiff = (right->left->height) - (right->right->height);
+  else if( bf < -1){
+    int rdiff = height(r->left) - height(r->right);
     if( rdiff > 0) //check if left subtree is heavy
-      //double rotate left
-      rotate_left(d->right);
-      rotate_left(d);
+      doubleRotateLeft(d);
     else
       rotate_left(d);
     return;
-
+  }
   else
     return;
 }
