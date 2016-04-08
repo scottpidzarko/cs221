@@ -61,9 +61,19 @@ bool AVLDict::find(MazeState *key, MazeState *&pred) {
 
 }
 
+//return true if the node's height has changed
 bool AVLDict::update_height( node * x ) {
-  // TODO:  Write this function!
 
+  if( node == NULL)
+    return false;
+
+  left = node->left;
+  right = node->right;
+
+  if(left->height == right->height)
+    return false;
+  else
+    return true;
 }
 
 void AVLDict::rotate_left( node *& a ) {
@@ -77,8 +87,18 @@ std::cout << "Rotate Left: " << a->getUniqId() << std::endl;
 #endif
 // End of "DO NOT CHANGE" Block
 
-  // TODO:  Write this function!
+  Node *temp;
 
+  temp = a->left;
+  a->left = temp->right;
+  temp->right = a;
+  a = temp;
+
+  //update_height(a);
+  //update_height(a->right);
+
+  delete temp;
+  return;
 }
 
 void AVLDict::rotate_right( node *& b ) {
@@ -92,15 +112,59 @@ cout << "Rotate Right: " << b->getUniqId() << endl;
 #endif
 // End of "DO NOT CHANGE" Block
 
-  // TODO:  Write this function!
+  Node *temp;
 
+  temp = b->right;
+  b->right = temp->left;
+  temp->left = b;
+  b = temp;
+
+//  update_height(b);
+//  update_height(b->left);
+
+  delete temp;
+  return;
 }
 
 // You may assume that no duplicate MazeState is ever added.
 void AVLDict::add(MazeState *key, MazeState *pred) {
 
-  // TODO:  Write this function!
+  if(pred == NULL || key == NULL){
+      return;
+  }
+
+  Node newNode;
+  newNode->key=key;
+  newNode->data=pred;
+
+
 
 }
+void AVLDict::balanceTree(node * d) {
+    if( d == NULL)
+      return;
 
-#endif 
+  left* = d->left;
+  right* = d->right;
+
+  int bf = (left->height - right->height);
+
+  if( bf = 0 )
+    return;
+  else if( bf = 1 )
+    rotate_right(d);
+    return
+  else if( bf = -1)
+    rotate_left(d);
+    return;
+  else if( bf > 1)
+    //double rotate right
+    return;
+  else if( bf < -1)
+    //double rotate left
+    return;
+  else //something screwed up if we get here
+    std::cout << "Something went wrong in AVLDict::balanceTree" << std::endl;
+    return;
+}
+#endif
