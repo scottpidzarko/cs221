@@ -61,21 +61,22 @@ bool AVLDict::find(MazeState *key, MazeState *&pred) {
 
 }
 
-//return true if the node's height has changed
+//code here directly from AVL lab
 bool AVLDict::update_height( node * x ) {
-
-  if( node == NULL)
-    return false;
-
-  left = node->left;
-  right = node->right;
-
-  if(left->height == right->height)
-    return false;
-  else
+  //
+  // Recalculates the height of x from the height of its children.
+  // Returns true iff the height of x changes.
+  //
+  if( x == NULL ) return false;
+  int m = std::max(height(x->left), height(x->right)) + 1;
+  if( x->height != m ) {
+    x->height = m;
     return true;
+  }
+  return false;
 }
 
+//code for this function adopted from that provided by AVL lab
 void AVLDict::rotate_left( node *& a ) {
   // "rotates" the subtree rooted at a to the left (counter-clockwise)
 
@@ -89,18 +90,18 @@ std::cout << "Rotate Left: " << a->getUniqId() << std::endl;
 
   Node *temp;
 
-  temp = a->left;
-  a->left = temp->right;
-  temp->right = a;
+  temp = a->right;
+  a->left = temp->left;
+  temp->lleft = a;
+  update_height(a);
+  update_height(temp);
   a = temp;
-
-  //update_height(a);
-  //update_height(a->right);
 
   delete temp;
   return;
 }
 
+//code for this function adopted from that provided by AVL lab
 void AVLDict::rotate_right( node *& b ) {
   // "rotates" the subtree rooted at b to the right (clockwise)
 
@@ -114,30 +115,129 @@ cout << "Rotate Right: " << b->getUniqId() << endl;
 
   Node *temp;
 
-  temp = b->right;
-  b->right = temp->left;
-  temp->left = b;
+  temp = b->left;
+  b->left = temp->right;
+  temp->right = b;
+  update_height(b);
+  update_height(temp);
   b = temp;
-
-//  update_height(b);
-//  update_height(b->left);
 
   delete temp;
   return;
 }
 
+//helper function from the avl lab
+void doubleRotateLeft( Node *& a ) {
+  rotateRight(a->right);
+  rotateLeft(a);
+}
+
+//helper function from the avl lab
+void doubleRotateRight( Node *& a ) {
+  rotateLeft(a->left);
+  rotateRight(a);
+}
+
+//helper function from the avl lab
+bool contains( KType key, Node * root ) {
+  //
+  // Return true iff the tree contains the given key.
+  //
+  if ( root == NULL ) {
+    return false;
+  }
+
+  if ( key < root->key ) {
+    return contains( key, root->left );
+  }
+  else if ( key > root->key ) {
+    return contains( key, root->right );
+  }
+  else
+    return true;
+}
+
+//helper function from the avl lab
+int height( Node * x ) {
+  //
+  // Returns the height of node x or -1 if x is NULL.
+  //
+  if( x == NULL ) return -1;
+  return x->height;
+}
+
+// helper function from avl lab
+Node* createNode( KType key, Node* l = NULL, Node* r = NULL ) {
+  //
+  // Creates a new Node containing key, with 'l' as its left
+  // child and 'r' as its right child, with height=0
+  //
+  // PRE:  key is valid, l points to a Node or is NULL and r
+  //       points to a Node or is NULL
+  // POST: If there is enough free memory space, a new Node is created
+  //	   and its address is returned; otherwise, NULL is returned.
+
+  Node* result = new Node;
+  if (! result) return (Node*) NULL;
+  result->key = key;
+  result->height = 0;
+  result->left = l;
+  result->right = r;
+  return result;
+}
+
+//this function borrowed from the AVL lab
+void AVLDict::insert( KType key, Node * root)
+  // BASE CASE
+  if( root == NULL ) {
+    root = createNode(key);
+    return;
+  }
+  // either go to the left, or to the right, but ignore if already in tree
+  if( key < root->key ) {
+    insert( key, root->left );
+  }
+  // if key == root->key then ignore it (do not insert duplicate)
+  else if( key > root->key ) {
+    insert( key, root->right );
+  }
+  // We know: descendant had a child added (in recursive call, above).
+  // Now we're "unwinding" the call-stack (returning from the recursive calls,
+  // one level at a time, until we get to the original call).
+  // Do we have to rebalance at this level?
+  if( updateHeight(root) ) balance(root);
+}
+
+
 // You may assume that no duplicate MazeState is ever added.
 void AVLDict::add(MazeState *key, MazeState *pred) {
 
-  if(pred == NULL || key == NULL){
+  //nothing to insert
+  if(key == NULL)
+    return;
+
+  //tree is empty, put the key at the root node (which pred refers to)
+  if(pred == NULL){
+      pred = key;
       return;
   }
 
-  Node newNode;
+  Node * newNode;
   newNode->key=key;
   newNode->data=pred;
 
+  if( newNode->badness? > pred->badness?){
+    add(newNode, pred->left);
+  }
+  else if( newNode->badness? > pred->badness?){
+    add(newNode, pred->right);
+  }
 
+
+  if(update_height(pred))
+    balanceTree(pred);
+
+  return;
 
 }
 void AVLDict::balanceTree(node * d) {
@@ -149,22 +249,29 @@ void AVLDict::balanceTree(node * d) {
 
   int bf = (left->height - right->height);
 
-  if( bf = 0 )
+  //left side is heavy
+  if( bf > 1 )
+    int ldiff = (left->left->height) - (left->right->height);
+    if( ldiff < 0) // check if right subtree is heavy
+      //double rotate right
+      rotate_right(d->left);
+      rotate_right(d);
+    else
+      rotate_right(d);
     return;
-  else if( bf = 1 )
-    rotate_right(d);
-    return
-  else if( bf = -1)
-    rotate_left(d);
-    return;
-  else if( bf > 1)
-    //double rotate right
-    return;
+
+  //right side is heavy - do opposite of above
   else if( bf < -1)
-    //double rotate left
+    int rdiff = (right->left->height) - (right->right->height);
+    if( rdiff > 0) //check if left subtree is heavy
+      //double rotate left
+      rotate_left(d->right);
+      rotate_left(d);
+    else
+      rotate_left(d);
     return;
-  else //something screwed up if we get here
-    std::cout << "Something went wrong in AVLDict::balanceTree" << std::endl;
+
+  else
     return;
 }
 #endif
