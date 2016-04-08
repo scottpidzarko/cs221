@@ -53,12 +53,37 @@ void AVLDict::record_stats(int depth) {
   depth_stats[depth]++;
 }
 
+// Returns true iff the key is found.
+ //
+ // If the key is found, pred is set to the predecessor.
+ // Do not delete the object pointed to by pred, as there will
+ // still be a pointer to that object inside the dictionary.
+bool AVLDict::find(MazeState * key, MazeState *& pred){
+  return finder(root, key->getUniqId(), pred, 0);
+}
 
+//returns true if the object is found, a recurse function called initially by find
+bool AVLDict::finder(node* top, string keyID, MazeState *& pred, int depth) {
+  if (top==NULL) {
+    if (depth<MAX_STATS) depth_stats[depth]++;
+    return false;
+  }
 
+  string rID = top->key->getUniqId();
+  if (keyID == rID) {
+    if (depth<MAX_STATS)
+      depth_stats[depth]++;
+    pred = top->data; // Found result, put in pred.
+    return true;
+  }
 
-bool AVLDict::find(MazeState *key, MazeState *&pred) {
-  // TODO:  Write this function!
+  record_stats(depth);
 
+  //recursively look through the tree for the key
+  if (keyID < rID)
+    return finder(top->left, keyID, pred, depth+1);
+  else
+    return finder(top->right, keyID, pred, depth+1);
 }
 
 //code here directly from AVL lab
@@ -97,7 +122,6 @@ std::cout << "Rotate Left: " << a->getUniqId() << std::endl;
   update_height(temp);
   a = temp;
 
-  delete temp;
   return;
 }
 
@@ -122,7 +146,6 @@ cout << "Rotate Right: " << b->getUniqId() << endl;
   update_height(temp);
   b = temp;
 
-  delete temp;
   return;
 }
 
@@ -167,7 +190,7 @@ int AVLDict::height( node * x ) {
   return x->height;
 }*/
 
-// helper function from avl lab
+// helper function from avl lab, slightly changed because the node struct changed
 AVLDict::node * AVLDict::createNode( MazeState* key, MazeState* data, node* l, node* r) {
   //
   // Creates a new Node containing key, with 'l' as its left
@@ -189,58 +212,71 @@ AVLDict::node * AVLDict::createNode( MazeState* key, MazeState* data, node* l, n
 }
 
 //this function borrowed and modified from the AVL lab
-void AVLDict::insert( node* in, node * root) {
+void AVLDict::insert( node* in, node * top) {
   // BASE CASE
-  if( root == NULL ) {
-    root = in;
+  if( top == NULL ) {
+    top = in;
     return;
   }
 
   string keyID = in->key->getUniqId();
-  string rID = root->key->getUniqId();
+  string rID = top->key->getUniqId();
 
   // either go to the left, or to the right, but ignore if already in tree
   if( keyID < rID ) {
-    insert( in, root->left );
+    insert( in, top->left );
   }
   // if key == root->key then ignore it (do not insert duplicate)
   else if( keyID > rID ) {
-    insert( in, root->right );
+    insert( in, top->right );
   }
   // We know: descendant had a child added (in recursive call, above).
   // Now we're "unwinding" the call-stack (returning from the recursive calls,
   // one level at a time, until we get to the original call).
   // Do we have to rebalance at this level?
-  if( update_height(root) )
-    balanceTree(root);
+  if( update_height(top) )
+    balanceTree(top);
 }
 
 
+// add a (key, predecessor) pair to the dictionary
+//
+// Note:  Do not delete the object pointed to by key or pred,
+//        since the dictionary will keep a link to the object.
 // You may assume that no duplicate MazeState is ever added.
-void AVLDict::add(MazeState *key, MazeState *pred) {
+void AVLDict::add(MazeState * key, MazeState * pred) {
 
   //nothing to insert
-  if(key == NULL)
-    return;
-
-  //tree is empty, put the key at the root node (which pred refers to)
-  if(pred == NULL){
-      pred = key;
-      return;
-  }
+  //if(key == NULL)
+    //return;
 
   node* newNode = createNode(key, pred);
+
+  //tree is empty, put the key at the root node (which pred refers to)
+  if(root == NULL) {
+    root = newNode;
+    return;
+  }
+
   string ID = newNode->key->getUniqId();
   string rID = root->key->getUniqId();
 
   if( ID > rID){
-    if(root->right == NULL)
+    if(root->right == NULL) {
       root->right = newNode;
+      if(update_height(root)) {
+        balanceTree(root);
+      }
     insert(newNode, root->right);
+    }
   }
   else if( ID > rID){
-    if(root->left == NULL)
+    if(root->left == NULL) {
       root->left = newNode;
+      if(update_height(root)){
+        balanceTree(root);
+      }
+    }
     insert(newNode, root->left);
   }
 
@@ -248,7 +284,7 @@ void AVLDict::add(MazeState *key, MazeState *pred) {
 
 }
 
-//done
+//done, taken from my AVL lab with slight modifications
 void AVLDict::balanceTree(node * d) {
   if( d == NULL)
     return;
