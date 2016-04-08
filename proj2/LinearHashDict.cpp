@@ -26,8 +26,8 @@ const int LinearHashDict::notprimes[] = {100, 300, 1000, 3000, 10000,
 
 LinearHashDict::LinearHashDict() {
   size_index = 0;
-  //size = primes[size_index];
-  size = notprimes[size_index];
+  size = primes[size_index];
+  //size = notprimes[size_index];
   table = new bucket[size](); // Parentheses force initialization to 0
   number = 0;
 
@@ -93,9 +93,6 @@ std::cout << "*** REHASHING " << size;
 #endif
 // End of "DO NOT CHANGE" Block
 
-
-  // TODO:  Your code goes here...
-
   // Keep a pointer to the old table.
 
   // Get a bigger table
@@ -104,7 +101,21 @@ std::cout << "*** REHASHING " << size;
 
   // No need to delete the data, as all copied into new table.
 
+  int old_size = size;
+  size_index++;
+  size = primes[size_index]; //muh Invariant
+  bucket *old_table = table;
+  table = new bucket[size]();
+  number = 0;
 
+  for(int k = 0; k < old_size; k++){
+    if (old_table[k].key != NULL){
+      add(old_table[k].key, old_table[k].data);
+    }
+  }
+
+  delete[] old_table;
+}
 // 221 Students:  DO NOT CHANGE OR DELETE THE NEXT FEW LINES!!!
 // And leave this at the end of the rehash() function.
 // We will use this code when marking to be able to watch what
@@ -119,8 +130,34 @@ bool LinearHashDict::find(MazeState *key, MazeState *&pred) {
   // Returns true iff the key is found.
   // Returns the associated value in pred
 
-  // TODO:  Your code goes here...
+  string keyID = key->getUniqId();
+  int hashKey = hash(keyID);
+  int probes = 0, position = 0;
+  int target;
 
+  while(position < size) {
+    target = (hashKey + position) % size;
+    bucket tempbucket = table[target];
+    string tempID = tempbucket.key->getUniqId();
+    if(tempID == keyID) {
+      if(probes < MAX_STATS) {
+        probes_stats[probes]++;
+        pred = table[target].data;
+        return true;
+        }
+
+      } else {
+        position++;
+      }
+      if(table[target].key == NULL) {
+        if(probes < MAX_STATS) {
+          probes_stats[probes]++;
+          return false;
+        }
+      }
+      probes++;
+    }
+    return false;
 }
 
 // You may assume that no duplicate MazeState is ever added.
@@ -129,8 +166,25 @@ void LinearHashDict::add(MazeState *key, MazeState *pred) {
   // Rehash if adding one more element pushes load factor over 3/4
   if (4*(number+1) > 3*size) rehash();
 
-  // TODO:  Your code goes here...
+  string keyID = key->getUniqId();
+  int hashKey = hash(keyID);
+  int position = 0;
+  int target;
+
+  while(position < size) {
+    target = (hashKey + position) % size;
+
+    if(table[target].key == NULL) {
+        table[target].key = key;
+        table[target].data = pred;
+        number++;
+        position++;
+        return;
+      } else {
+        position++;
+      }
+    }
 
 }
 
-#endif 
+#endif
