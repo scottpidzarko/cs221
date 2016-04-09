@@ -1,30 +1,30 @@
-Student Name #1: TODO:
-Student ugrad login #1: TODO:
+Student Name #1: Scott Pidzarko:
+Student ugrad login #1: w2p8:
 
-Student Name #2: TODO:
-Student ugrad login #2: TODO:
+Student Name #2: N/A:
+Student ugrad login #2: N/A:
 
-Team name (for fun!): TODO:
+Team name (for fun!): I want to finish this so I can go to block party:
 
 Acknowledgment that you understand and have followed the course's
 collaboration policy
 (http://www.ugrad.cs.ubc.ca/~cs221/current/syllabus.shtml#conduct):
 
-TODO: [[Put your names here again as a signature]]
+Scott Pidzarko: [[Put your names here again as a signature]]
 
 TODO: submit using: make handin-proj2
 
 ----------------------------------------------------------------------
 
-Approximate hours on project: TODO:
+Approximate hours on project: 15
 
 ----------------------------------------------------------------------
 
-For teams, rough breakdown of work: TODO:
+For teams, rough breakdown of work: N/A:
 
 ----------------------------------------------------------------------
 
-Acknowledgment of assistance: TODO:
+Acknowledgment of assistance: I'd like to thank StackOverflow as usual, and Piazza:
 
 ----------------------------------------------------------------------
 
@@ -43,13 +43,15 @@ TODO:
 What runtime do you get?  This is roughly the performance you had
 for Project 1.
 
-TODO:
+I got a runtime of 38.416s. This is roughly similar to what I got last time.
 
 3.  Run the 5x5 slider puzzle with HeapPriorityQueue and your working
 AVLDict, LinearHashDict, and DoubleHashDict classes.
 What are your run times?  How do they compare to Q2?
 
-TODO:
+AVLDict:
+LinearHashDict:
+DoubleHashDict:
 
 For the remaining questions, we'll keep using HeapPriorityQueue,
 but switch to the UNSOLVABLE 3x3 slider puzzle to have something

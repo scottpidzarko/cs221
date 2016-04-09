@@ -66,9 +66,8 @@ void LinearHashDict::record_stats(int probes) {
   probes_stats[probes]++;
 }
 
-
-
 int LinearHashDict::hash(string keyID) {
+  //std::cout << "in hash" << std::endl;
   int h=0;
   for (int i=keyID.length()-1; i>=0; i--) {
     h = (keyID[i] + 31*h) % size;
@@ -84,6 +83,7 @@ std::cout << "Hashing " << keyID << " to " << h << std::endl;
 }
 
 void LinearHashDict::rehash() {
+  //std::cout << "in rehash" << std::endl;
 // 221 Students:  DO NOT CHANGE OR DELETE THE NEXT FEW LINES!!!
 // And leave this at the beginning of the rehash() function.
 // We will use this code when marking to be able to watch what
@@ -94,11 +94,8 @@ std::cout << "*** REHASHING " << size;
 // End of "DO NOT CHANGE" Block
 
   // Keep a pointer to the old table.
-
   // Get a bigger table
-
   // Rehash all the data over
-
   // No need to delete the data, as all copied into new table.
 
   int old_size = size;
@@ -114,6 +111,7 @@ std::cout << "*** REHASHING " << size;
     }
   }
 
+  //memory leaks are bad kids
   delete[] old_table;
 
 // 221 Students:  DO NOT CHANGE OR DELETE THE NEXT FEW LINES!!!
@@ -124,43 +122,59 @@ std::cout << "*** REHASHING " << size;
 std::cout << " to " << size << " ***\n";
 #endif
 // End of "DO NOT CHANGE" Block
+  return;
 }
 
 bool LinearHashDict::find(MazeState *key, MazeState *&pred) {
-  // Returns true iff the key is found.
-  // Returns the associated value in pred
+  //std::cout << "in find" << std::endl;
+
+  // Returns true iff the key is found, puts the key in pred
 
   string keyID = key->getUniqId();
   int hashKey = hash(keyID);
-  int probes = 0, position = 0;
+  int probes = 1, position = 0; // set the probes to be one for the first iteration of the loop
   int target;
-
+  //std::cout << "Hashkey: " << hashKey << " probes: " << probes << " position: " << position << " size: " << size << std::endl;
   while(position < size) {
+    //std::cout << "in find loop" << std::endl;
+    //std:: cout << position << " " << size << std::endl;
     target = (hashKey + position) % size;
     bucket tempbucket = table[target];
-    string tempID = tempbucket.key->getUniqId();
-    if(tempID == keyID) {
-      if(probes < MAX_STATS) {
-        probes_stats[probes]++;
-        pred = table[target].data;
-        return true;
-        }
-      } else {
-        position++;
-      }
-      if(table[target].key == NULL) {
-        if(probes < MAX_STATS) {
-          probes_stats[probes]++;
-          return false;
-        }
-      }
-      probes++;
+    string tempID;
+
+    //If the key is null we have to give it a blank UniqID or otherwise segmentation faults happen
+    if(tempbucket.key != NULL){
+      tempID = tempbucket.key->getUniqId();
     }
-    return false;
+    else{
+      tempID = "";
+    }
+
+    //It's a match
+    if(tempID == keyID) {
+      pred = table[target].data;
+      return true;
+    }
+    //no match
+    else {
+      position++;
+    }
+    //a null key indicates an unsuccessful probe
+    //for some reason I need to return false here for the probes to count correctly
+    if(tempbucket.key == NULL){
+      record_stats(probes);
+      return false;
+    }
+
+    probes++;
+  }
+  return false;
 }
 
 // You may assume that no duplicate MazeState is ever added.
 void LinearHashDict::add(MazeState *key, MazeState *pred) {
+
+  //std::cout << "in add" << std::endl;
 
   // Rehash if adding one more element pushes load factor over 3/4
   if (4*(number+1) > 3*size) rehash();

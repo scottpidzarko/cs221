@@ -37,16 +37,16 @@ class AVLDict : public PredDict
     void destructor_helper(node * x);
     // These are helper functions just like in your lab...
     inline int height(node *x) { return (x==NULL) ? -1 : x->height; }
-    bool update_height(node *x);
+    bool update_height(node * x);
     void rotate_left(node *& a);
     void rotate_right(node *& b);
     void doubleRotateLeft(node *& a);
     void doubleRotateRight(node *& a);
-    bool contains( MazeState* key, node * root );
+    bool contains( MazeState* key, node *& top );
     node* createNode( MazeState* key, MazeState* data, node* l = NULL, node* r = NULL );
-    void insert( node* in, node * root);
-    void balanceTree(node * d);
-    bool finder(node* top, string keyID, MazeState *& pred, int depth);
+    void insert( node* in, node *& top);
+    void balanceTree(node *& d);
+    bool finder(node * top, string keyID, MazeState *& pred, int depth);
   };
 
 #endif

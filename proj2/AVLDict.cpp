@@ -59,16 +59,20 @@ void AVLDict::record_stats(int depth) {
  // Do not delete the object pointed to by pred, as there will
  // still be a pointer to that object inside the dictionary.
 bool AVLDict::find(MazeState * key, MazeState *& pred){
-  if(pred = NULL){
-    std::cout << "null pred" << std::endl;
+  if(pred == (NULL)){
+    //std::cout << "null pred" << std::endl;
   }
   return finder(root, key->getUniqId(), pred, 0);
 }
 
 //returns true if the object is found, a recurse function called initially by find
-bool AVLDict::finder(node* top, string keyID, MazeState *& pred, int depth) {
+bool AVLDict::finder(node * top, string keyID, MazeState *& pred, int depth) {
+  if(pred == (NULL)){
+    std::cout << "null pred" << std::endl;
+  }
+  if (depth<MAX_STATS) depth_stats[depth]++;
+
   if (top==NULL) {
-    if (depth<MAX_STATS) depth_stats[depth]++;
     return false;
   }
 
@@ -165,19 +169,19 @@ void AVLDict::doubleRotateRight( node *& a ) {
 }
 
 //helper function from the avl lab
-bool AVLDict::contains( MazeState* key, node * root ) {
+bool AVLDict::contains( MazeState* key, node *& top ) {
   //
   // Return true iff the tree contains the given key.
   //
-  if ( root == NULL ) {
+  if ( top == NULL ) {
     return false;
   }
 
-  if ( key < root->key ) {
-    return contains( key, root->left );
+  if ( key < top->key ) {
+    return contains( key, top->left );
   }
-  else if ( key > root->key ) {
-    return contains( key, root->right );
+  else if ( key > top->key ) {
+    return contains( key, top->right );
   }
   else
     return true;
@@ -215,7 +219,7 @@ AVLDict::node * AVLDict::createNode( MazeState* key, MazeState* data, node* l, n
 }
 
 //this function borrowed and modified from the AVL lab
-void AVLDict::insert( node* in, node * top) {
+void AVLDict::insert( node* in, node *& top) {
   // BASE CASE
   if( top == NULL ) {
     top = in;
@@ -261,7 +265,7 @@ void AVLDict::add(MazeState * key, MazeState * pred) {
     return;
   }
 
-  string ID = newNode->key->getUniqId();
+  string ID = key->getUniqId();
   string rID = root->key->getUniqId();
 
   if( ID > rID){
@@ -282,7 +286,7 @@ void AVLDict::add(MazeState * key, MazeState * pred) {
 }
 
 //done, taken from my AVL lab with slight modifications
-void AVLDict::balanceTree(node * d) {
+void AVLDict::balanceTree(node *& d) {
   if( d == NULL)
     return;
 
