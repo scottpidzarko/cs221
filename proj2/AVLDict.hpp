@@ -47,6 +47,8 @@ class AVLDict : public PredDict
     void insert( node* in, node *& top);
     void balanceTree(node *& d);
     bool finder(node * top, string keyID, MazeState *& pred, int depth);
+	void printTreeHelper(node* r, int d);
+	void printTree(node* r);
   };
 
 #endif
