@@ -1,21 +1,21 @@
 all : dates lists 
 	echo "all compiled"
 
-dates : dates.cc CDate.o Unit.o 
-	g++ -Wall dates.cc CDate.o Unit.o  -o dates -lstdc++
+dates : dates.cc CDate.o 
+	g++ -Wall dates.cc CDate.o -o dates
 
 CDate.o : CDate.cc CDate.h 
-	g++ -Wall -c CDate.cc -o CDate.o -lstdc++
+	g++ -Wall -c CDate.cc -o CDate.o 
 
-lists : lists.cc linked_list.cc Unit.o
-	g++ -Wall lists.cc Unit.o -o lists -lstdc++
+linked_list.o : linked_list.cc linked_list.h
+	g++ -Wall -c linked_list.cc -o linked_list.o
 
-Unit.o : Unit.cc Unit.h  
-	g++ -Wall -c Unit.cc -o Unit.o -lstdc++
+lists.o : lists.cc linked_list.h
+	g++ -std=c++11 -Wall -c lists.cc -o lists.o
+
+lists : lists.o linked_list.o
+	g++ -Wall lists.o linked_list.o -o lists 
 
 clean :
-	rm -f CDate.o 
-	rm -f dates 
-	rm -f Unit.o 
-	rm -f lists
+	rm -f dates CDate.o linked_list.o lists.o lists
  
