@@ -1,0 +1,13 @@
+==========================
+== Name: Scott Pidzarko ==
+== Student No. 33730128 ==
+===== Ugrad ID w2p8 ======
+==========================
+
+This project was done without a partner.
+
+Hours spent: 
+
+Assistance: 
+
+List of Files: huftree.cc for the main program, codetree.h for the implementation of CodeTree, the Makefile for make, and moveover.txt provided by the course for testing purposes. Compilesd using make. Ran with ./huftree <text file here>.
