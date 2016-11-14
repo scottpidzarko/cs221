@@ -5,8 +5,8 @@ all : huftree
 # 'huftree' depends on one .o (object) file
 # add any new .o files to the list
 # build it using g++
-huftree : huftree.o codetree.o heap.o
-	g++ -o huftree -g huftree.o codetree.o heap.o
+huftree : huftree.o codetree.o maxheap.o
+	g++ -o huftree -g huftree.o codetree.o maxheap.o
 
 # huftree.o is dependant on one .cc file and no .h files
 # IMPORTANT: when you #include a new .h file, be sure to add it here.
@@ -20,9 +20,9 @@ huftree : huftree.o codetree.o heap.o
 huftree.o : huftree.cc
 	g++ -Wall -c -g huftree.cc
 codetree.o: codetree.cc
-	g++ -Wall -c -g codetree.cc
-heap.o: heap.cc
-	g++ -Wall -c -g heap.cc
+	g++ -Wall -c -g codetree.cc codetree.h
+maxheap.o: maxheap.cc
+	g++ -Wall -c -g maxheap.cc maxheap.h
 
 # and same idea for other .o files ...
 
