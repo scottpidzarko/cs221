@@ -27,11 +27,17 @@ void MaxHeap::insert(Node* in){
 	heap.push_back(in);
 	heapify(heap.size()-1);
 }
+void MaxHeap::listHeap(void){
+	for(int i=0; i < heap.size(); i++){
+		std::cout << " (" << heap[i]->frequency << "," << heap[i]->character << ") ,";
+	}
+	std::cout << std::endl;
+}
 //I do have to implement this for insert
 void MaxHeap::heapify(int index){
 	int parentIndex = parent(index);
-	if(heap[parent]->frequency < heap[index]->frequency){
-		swapUp(parent, index);
+	if(heap[parentIndex]->frequency < heap[index]->frequency){
+		swapUp(parentIndex, index);
 	}
 }
 //Don't need this since we are never going to delete anything from the heap in this assignment, leave blank
@@ -52,13 +58,13 @@ void MaxHeap::swapUp(int parent, int index){
 //http://www.sourcetricks.com/2011/06/c-heaps.html
 //Get the index of the left node
 int MaxHeap::left(int parent){
-    int i = ( parent << 1 ) + 1; // 2 * parent + 1
+    int i = ( 2 * parent ) + 1; // 2 * parent + 1
     return ( i < heap.size() ) ? i : -1;
 }
 //http://www.sourcetricks.com/2011/06/c-heaps.html
 //Get index of the right node
 int MaxHeap::right(int parent){
-    int i = ( parent << 1 ) + 2; // 2 * parent + 2
+    int i = (2*parent) + 2; // 2 * parent + 2
     return ( i < heap.size() ) ? i : -1;
 }
 //http://www.sourcetricks.com/2011/06/c-heaps.html

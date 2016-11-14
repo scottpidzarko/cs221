@@ -13,6 +13,7 @@ public:
 	//contains();
 	//at();
 	void insert(Node* );
+	void listHeap();
 private:
 	std::vector<Node *> heap;
 private:

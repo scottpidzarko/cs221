@@ -108,5 +108,6 @@ void CodeTree::buildPriorityQ(){
 	}
 
 	//The heap now contains the codetree, we're done here
+	codeTreeHeap.listHeap();
 
 }

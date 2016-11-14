@@ -1,7 +1,7 @@
 //codetree.h - library that implements a CodeTree
 
 #include <vector>
-#include "MaxHeap.h"
+#include "maxheap.h"
 #include "node.h"
 
 #ifndef CODETREE_H
