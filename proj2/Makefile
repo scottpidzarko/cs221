@@ -20,9 +20,9 @@ huftree : huftree.o codetree.o maxheap.o
 huftree.o : huftree.cc
 	g++ -Wall -c -g huftree.cc
 codetree.o: codetree.cc
-	g++ -Wall -c -g codetree.cc codetree.h
+	g++ -Wall -c -g codetree.cc codetree.h node.h
 maxheap.o: maxheap.cc
-	g++ -Wall -c -g maxheap.cc maxheap.h
+	g++ -Wall -c -g maxheap.cc maxheap.h node.h
 
 # and same idea for other .o files ...
 

@@ -5,7 +5,6 @@
 #include <vector>
 //Libraries we wrote
 #include "codetree.h"
-#include "maxheap.h"
 
 // Print the Huffman code tree and list of codes for a given text file.
 

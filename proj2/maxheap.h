@@ -1,23 +1,28 @@
 #include <vector>
+#include "node.h"
 
-struct Node {
-	int frequency;
-	int character; //all the nodes except leaves will not have a character
-				   //character being -1 indicates that the node does not contain any valid character data.
-};
+#ifndef MAXHEAP_H
+#define MAXHEAP_H
 
 class MaxHeap{
 	//Our heap is done with a vector, so we don't need leftchild/rightchild pointers.
-	std::vector<Node *> heap;
 public:
+	MaxHeap();
 	MaxHeap(std::vector<Node *>);
 	~MaxHeap();
 	//contains();
 	//at();
+	void insert(Node* );
+private:
+	std::vector<Node *> heap;
 private:
 	void makeMaxHeap();
-	void heapify(std::vector<Node *>, std::vector<Node*>);
+	void heapify(int index);
 	void swapDown();
-	void swapUp();
-	void insert();
+	void swapUp(int parent, int index);
+	int parent(int child);
+	int right(int parent);
+	int left(int parent);
 };
+
+#endif /* MAXHEAP_H */

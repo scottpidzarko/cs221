@@ -1,7 +1,8 @@
 #include <iostream>
 #include <iterator>
 #include "codetree.h"
-
+#include "node.h"
+#include "maxheap.h"
 
 //public functions -------------------
 
@@ -20,31 +21,35 @@ void CodeTree::printTree(void){
 void CodeTree::printCode(void){
 }
 
-void CodeTree::insertSmallestTwo(std::vector<Node*> frequencies, Heap heap){
-	if(size(frequencies) == 0) return;
-
-	Node smallest = new Node;
+void CodeTree::insertSmallestTwo(std::vector<Node*> frequencies, MaxHeap heap){
+	if(frequencies.size() == 0) return;
+	int smallestIndex;
+	Node* smallest = new Node;
 	smallest->frequency=0;
-	Node secondSmallest = new Node;
+	int secondSmallestIndex;
+	Node* secondSmallest = new Node;
 	secondSmallest->frequency=0;
-	Node newParent = new Node;
+	Node* newParent = new Node;
 
 	//Root node, skip searching and just add it to the heap;
-	if(size(frequencies) == 1){
+	if(frequencies.size() == 1){
 		heap.insert(frequencies[0]);
 		return;
 	}
 
 	//find the two smallest frequency characters
-	for(int i=0, j < frequencies.size(), frequencies++){
+	for(int i=0; i < frequencies.size(); i++){
 		if(frequencies[i]->frequency >= secondSmallest->frequency){
 			smallest->frequency = secondSmallest->frequency;
 			smallest->character = secondSmallest->character;
-			secondSmallest->frequency = frequencies[i]->frequencies);
-			secondSmallest->character = frequencies[i]->character);
-		} else if( (frequencies[i]->frequency < secondSmallest->frequency)) && (frequencies[i]->frequency > smallest->frequency)){
+			smallestIndex = secondSmallestIndex;
+			secondSmallest->frequency = frequencies[i]->frequency;
+			secondSmallest->character = frequencies[i]->character;
+			secondSmallestIndex = i;
+		} else if( (frequencies[i]->frequency < secondSmallest->frequency) && (frequencies[i]->frequency > smallest->frequency) ){
 			smallest->frequency = frequencies[i]->frequency;
 			smallest->character = frequencies[i]->character;
+			smallestIndex=i;
 		}
 	}
 
@@ -53,8 +58,8 @@ void CodeTree::insertSmallestTwo(std::vector<Node*> frequencies, Heap heap){
 
 	heap.insert(smallest);
 	heap.insert(secondSmallest);
-	frequencies.remove(smallest);
-	frequencies.remove(secondSmallest);
+	frequencies.erase(frequencies.begin()+smallestIndex); //https://stackoverflow.com/questions/875103/how-to-erase-element-from-stdvector-by-index
+	frequencies.erase(frequencies.begin()+secondSmallestIndex);
 	frequencies.push_back(newParent);
 	return;
 }
@@ -82,9 +87,9 @@ void CodeTree::buildPriorityQ(){
 	//The algorithm repeats this process until only one node, the root, remains.
 
 	//Build list of nodes
-	for(int i = 0, i < 256, i++){
+	for(int i = 0; i < 256; i++){
 		if( freq[i] != 0 ){
-			Node n = new Node;
+			Node* n = new Node;
 			n->frequency = freq[i];
 			n->character = i;
 			frequencies.push_back(n);
@@ -98,7 +103,7 @@ void CodeTree::buildPriorityQ(){
 	//Repeat until we have nothing left
 	// Yeah yeah I could do this more recursively without the while loop but it's basically the same amount of lines of code
 	//for this to call itself recursively. It works. Meh. We aren't running out of stack frames or anything anyway
-	while(frequencies.is_empty() != true){
+	while(frequencies.empty() != true){
 		insertSmallestTwo(frequencies, codeTreeHeap);
 	}
 
