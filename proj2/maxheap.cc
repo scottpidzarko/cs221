@@ -25,7 +25,7 @@ void MaxHeap::makeMaxHeap(){
 //Put the object in the heap vector at the end, and call heapify on the end of the heap to put it in the right place
 void MaxHeap::insert(Node* in){
 	heap.push_back(in);
-	heapify(heap.size()-1);
+	if(heap.size() > 1) heapify(heap.size()-1);
 }
 void MaxHeap::listHeap(void){
 	for(int i=0; i < heap.size(); i++){
@@ -55,19 +55,15 @@ void MaxHeap::swapUp(int parent, int index){
 	delete temp;
 	heapify(parent);
 }
-//http://www.sourcetricks.com/2011/06/c-heaps.html
+
 //Get the index of the left node
 int MaxHeap::left(int parent){
-    int i = ( 2 * parent ) + 1; // 2 * parent + 1
-    return ( i < heap.size() ) ? i : -1;
+	return ( 2 * parent ) + 1;
 }
-//http://www.sourcetricks.com/2011/06/c-heaps.html
 //Get index of the right node
 int MaxHeap::right(int parent){
-    int i = (2*parent) + 2; // 2 * parent + 2
-    return ( i < heap.size() ) ? i : -1;
+    return (2*parent) + 2;
 }
-//http://www.sourcetricks.com/2011/06/c-heaps.html
 //Get parent index given a node's index
 int MaxHeap::parent(int child){
     if (child != 0){
