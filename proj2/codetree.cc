@@ -40,17 +40,17 @@ void CodeTree::insertSmallestTwo(std::vector<Node*> frequencies, MaxHeap heap){
 
 	//find the two smallest frequency characters
 	for(int i=0; i < frequencies.size(); i++){
-		if(frequencies[i]->frequency >= secondSmallest->frequency){
-			smallest->frequency = secondSmallest->frequency;
-			smallest->character = secondSmallest->character;
-			smallestIndex = secondSmallestIndex;
-			secondSmallest->frequency = frequencies[i]->frequency;
+		if( (frequencies[i]->frequency < secondSmallest->frequency) && (frequencies[i]->frequency >= smallest->frequency) ){
+			SecondSmallest->frequency = frequencies[i]->frequency;
 			secondSmallest->character = frequencies[i]->character;
-			secondSmallestIndex = i;
-		} else if( (frequencies[i]->frequency < secondSmallest->frequency) && (frequencies[i]->frequency > smallest->frequency) ){
+			SecondSmallestIndex = i;
+		} else if( frequencies[i]->frequency < smallest->frequency) ){
+			secondSmallest->frequency = smallest->frequency;
+			secondSmallest->character = smallest->character;
+			secondSmallestIndex = smallestIndex;
 			smallest->frequency = frequencies[i]->frequency;
 			smallest->character = frequencies[i]->character;
-			smallestIndex=i;
+			smallestIndex = i;
 		}
 	}
 
@@ -96,6 +96,7 @@ void CodeTree::buildPriorityQ(){
 		if( freq[i] != 0 ){
 			Node* n = new Node;
 			n->frequency = freq[i];
+			std::cout << n->frequency;
 			n->character = i;
 			frequencies.push_back(n);
 		}
