@@ -1,14 +1,14 @@
-# Our project ('all') is just to build the executable file 'index'
-# This line simply says that 'all' depends on 'index'.
+# Our project ('all') is just to build the executable file 'huftree'
+# This line simply says that 'all' depends on 'huftree'.
 all : huftree
 
-# 'index' depends on one .o (object) file
+# 'huftree' depends on one .o (object) file
 # add any new .o files to the list
 # build it using g++
-huftree : huftree.o
-	g++ -o huftree -g huftree.o
+huftree : huftree.o codetree.o heap.o
+	g++ -o huftree -g huftree.o codetree.o heap.o
 
-# index.o is dependant on one .cc file and no .h files
+# huftree.o is dependant on one .cc file and no .h files
 # IMPORTANT: when you #include a new .h file, be sure to add it here.
 # Otherwise, the 'make' command may not re-build your program even
 # though you changed that .h file.
@@ -19,10 +19,12 @@ huftree : huftree.o
 # debuggers (like gdb or ddd or xxgdb)
 huftree.o : huftree.cc
 	g++ -Wall -c -g huftree.cc
+codetree.o: codetree.cc
+	g++ -Wall -c -g codetree.cc
+heap.o: heap.cc
+	g++ -Wall -c -g heap.cc
 
 # and same idea for other .o files ...
-
-
 
 # 'clean' removes any files that were created via the Makefile,
 # leaving you with only your original source code files
