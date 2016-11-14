@@ -8,8 +8,9 @@
 
 //Constructor
 CodeTree::CodeTree(int freqin[]){
-	std::copy(freqin, freqin+256, freq); // https://stackoverflow.com/questions/9426932/how-do-i-pass-an-array-to-a-constructor
-	std::vector<Node*> frequencies;
+	for(int i=0; i < 256; i++){
+		freq[i]=freqin[i];
+	}
 	buildPriorityQ();
 }
 //Destructor
@@ -55,6 +56,10 @@ void CodeTree::insertSmallestTwo(std::vector<Node*> frequencies, MaxHeap heap){
 
 	newParent->frequency = smallest->frequency + secondSmallest->frequency;
 	newParent->character = -1; //the parent isn't a leaf so doesn't contain a character
+	std::cout << smallestIndex << std::endl;
+	std::cout << secondSmallestIndex << std::endl;
+	std::cout << frequencies[smallestIndex]->frequency << std::endl;
+	std::cout << frequencies[secondSmallestIndex]->frequency << std::endl;
 
 	heap.insert(smallest);
 	heap.insert(secondSmallest);
