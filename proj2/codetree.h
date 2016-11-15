@@ -14,9 +14,11 @@ class CodeTree{
 private:
 	int freq[256];
 	std::vector<Node*> frequencies;
-	MaxHeap heap;
+	Node* treeRoot;
 	void printChar(int ch);
-	void buildPriorityQ(void);
+	MaxHeap buildPriorityQ(void);
+	void buildTree();
+	void recursePrintTree( Node* r, int d );
 public:
 	CodeTree(int freqin[]);
 	~CodeTree();

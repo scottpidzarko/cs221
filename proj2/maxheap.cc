@@ -22,7 +22,17 @@ MaxHeap::~MaxHeap(){
 //Put the object in the heap vector at the end, and call heapify on the end of the heap to put it in the right place
 void MaxHeap::insert(Node* in){
 	heap.push_back(in);
-	if(heap.size() > 1) heapify(heap.size());
+	sort(heap.size());
+}
+
+int MaxHeap::size(){
+	return heap.size();
+}
+
+Node* MaxHeap::removeMin(void){
+	Node* ret = heap.back();
+	heap.pop_back();
+	return ret;
 }
 
 void MaxHeap::listHeap(void) {

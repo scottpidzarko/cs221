@@ -14,11 +14,13 @@ public:
 	//at();
 	void insert(Node* );
 	void listHeap();
+	Node* removeMin();
+	int size();
 private:
 	std::vector<Node *> heap;
 private:
 	void heapify(int size);
-	void sort(int size);//
+	void sort(int size);
 	void swapDown(int i, int size);
 	int parent(int child);
 	int right(int parent);

@@ -6,8 +6,18 @@
 
 This project was done without a partner.
 
-Hours spent: 
+Hours spent: ~13. Spent many hours doing the wrong implementation and got put on the correct course by a friend
 
-Assistance: 
+Assistance: Stackoverflow for looking up debugging errors that were weird since I haven't created classes from scratch for a while
+A friend of mine who is in my lab also provided assistance for helping put me on the right track towards using heap as only a priority Queue,
+as opposed to using the heap as both the tree and priority Queue.
 
-List of Files: huftree.cc for the main program, codetree.h for the implementation of CodeTree, the Makefile for make, and moveover.txt provided by the course for testing purposes. Compilesd using make. Ran with ./huftree <text file here>.
+List of Files:
+- huftree.cc for the main program,
+- codetree.cc + codetree.h for the implementation of CodeTree
+- node.h for the definition of a tree node, used in several other files
+- maxheap.h + maxheap.cc for the heap implementation
+- the Makefile for make
+- moveover.txt provided by the course for testing purposes.
+
+Compiled using make. Ran with ./huftree <text file here>.

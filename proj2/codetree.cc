@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iterator>
+#include <iomanip>
 #include "codetree.h"
 #include "node.h"
 #include "maxheap.h"
@@ -11,22 +12,39 @@ CodeTree::CodeTree(int freqin[]){
 	for(int i=0; i < 256; i++){
 		freq[i]=freqin[i];
 	}
-	buildPriorityQ();
+	buildTree();
 }
 //Destructor
 CodeTree::~CodeTree (void){
 }
 
 void CodeTree::printTree(void){
+	recursePrintTree(treeRoot, 0);
 }
 void CodeTree::printCode(void){
 }
 
 //private functions -----------------
 
+void CodeTree::recursePrintTree( Node* r, int d) {
+	if( r == NULL ) return;
+    recursePrintTree( r->right, d+1 );
+	std::cout << std::setw( 3 * d ) << ""; // output 3 * d spaces
+	std::cout << " (";
+	printChar(r->character);
+	std::cout << "," << r->frequency << ") ";
+	recursePrintTree( r->left, d+1 );
+}
+
+
 //PROVIDED BY THE PROF, DO NOT ALTER
 //Takes an integer and prints it as ASCII character
-void printChar( int ch ) {
+void CodeTree::printChar( int ch ) {
+	//accunt for non-leaf nodes that don't have a character associated
+	if( ch == -1) {
+		std::cout << "NUL";
+		return;
+	}
     if( ch < 16 ) {
         std::cout << "x0" << std::hex << ch;
     } else if( ch < 32 || ch > 126 ) {
@@ -36,14 +54,7 @@ void printChar( int ch ) {
 	}
 }
 
-void CodeTree::buildPriorityQ(){
-	//Huffman's algorithm builds the code tree by starting with a priority queue containing
-	//separate nodes, one for each distinct character in the input, whose priorities are the frequencies of
-	//their corresponding characters. It picks two nodes with the lowest frequencies (the nodes r and
-	//in our example) and joins them with a new common parent node whose frequency is the sum of
-	//the two frequencies (the node labeled 3). The parent node replaces its two children in the queue.
-	//The algorithm repeats this process until only one node, the root, remains.
-
+MaxHeap CodeTree::buildPriorityQ(){
 	//Build list of nodes
 	for(int i = 0; i < 256; i++){
 		if( freq[i] != 0 ){
@@ -54,15 +65,30 @@ void CodeTree::buildPriorityQ(){
 		}
 	}
 
+	//Maxheap is priorityQ - least element is at back, greatest is as front
+	//Done that way because std::vector.pop_back makes for a simple "pop Minimum" function
 	MaxHeap codeTreeHeap(frequencies);
+	codeTreeHeap.listHeap();
+	return codeTreeHeap;
+}
 
-	//Find two smallest frequencies values, and create a parent.
-	//Shove the smallest two into heap. Add the parent into the frequencies vector ande delete it's children.
-	//Repeat until we have nothing left
-	// Yeah yeah I could do this more recursively without the while loop but it's basically the same amount of lines of code
-	//for this to call itself recursively. It works. Meh. We aren't running out of stack frames or anything anyway
-
-	//The heap now contains the codetree, we're done here
-	codeTreeHeap.listHeap(); //should be 4 4 4 2 2 1
-
+//returns root node of the tree
+//Builds tree using huffman's algorithm
+void CodeTree::buildTree(void){
+	MaxHeap pQ = buildPriorityQ();
+	while(pQ.size() > 1){
+		Node* left = pQ.removeMin();
+		Node* right = pQ.removeMin();
+		Node* parent = new Node;
+		parent->frequency = left->frequency + right->frequency;
+		std::cout << "parent frequency is: " << parent->frequency << std::endl;
+		parent->character = -1;
+		parent->right = right;
+		parent->left = left;
+		pQ.insert(parent);
+	}
+	//one node left - this is the root
+	treeRoot = pQ.removeMin();
+	std::cout << "root node frequency is: " << treeRoot->frequency << std::endl;
+	return;
 }
