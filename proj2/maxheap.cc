@@ -14,46 +14,53 @@ MaxHeap::MaxHeap(){
 // them with the highest frequency at the top. The constructor goes purely off of the frequency, with no care about the character
 //v is a vector of unsorted nodes
 MaxHeap::MaxHeap( std::vector<Node* > v){
-	//heap = v;
-	//makeMaxHeap();
+	heap = v;
+	sort(heap.size());
 }
 MaxHeap::~MaxHeap(){
-}
-//I can get away with not implementing this
-void MaxHeap::makeMaxHeap(){
 }
 //Put the object in the heap vector at the end, and call heapify on the end of the heap to put it in the right place
 void MaxHeap::insert(Node* in){
 	heap.push_back(in);
-	if(heap.size() > 1) heapify(heap.size()-1);
+	if(heap.size() > 1) heapify(heap.size());
 }
-void MaxHeap::listHeap(void){
-	for(int i=0; i < heap.size(); i++){
-		std::cout << " (" << heap[i]->frequency << "," << heap[i]->character << ") ,";
+
+void MaxHeap::listHeap(void) {
+    for (int i = 0; i < heap.size(); i++){
+		int ch = heap[i]->character;
+        std::cout << " (";
+		heapPrintChar(ch);
+		std::cout << "," << heap[i]->frequency << ") ";
 	}
-	std::cout << std::endl;
+    std::cout << std::endl;
 }
-//I do have to implement this for insert
-void MaxHeap::heapify(int index){
-	int parentIndex = parent(index);
-	if(heap[parentIndex]->frequency < heap[index]->frequency){
-		swapUp(parentIndex, index);
-	}
+
+void MaxHeap::sort(int size) {
+    heapify(size);  // Heapify algorithm
+    for (int i = size - 1; i > 0; i--) {
+        std::swap(heap[0], heap[i]);
+        swapDown(0, i);
+    }
 }
-//Don't need this since we are never going to delete anything from the heap in this assignment, leave blank
-void MaxHeap::swapDown(){
+void MaxHeap::heapify(int size) {
+    for (int i = (size - 2) / 2; i >= 0; i--)
+        swapDown(i, size);
 }
-//Swaps node at index with node at parent
-void MaxHeap::swapUp(int parent, int index){
-	Node* temp = new Node;
-	temp->frequency = heap[parent]->frequency;
-	temp->character = heap[parent]->character;
-	heap[parent]->frequency = heap[index]->frequency;
-	heap[parent]->character = heap[index]->character;
-	heap[index]->frequency = temp->frequency;
-	heap[index]->character = temp->character;
-	delete temp;
-	heapify(parent);
+void MaxHeap::swapDown( int i, int size) {
+    int leftChild = left(i);
+    int rightChild = right(i);
+    int min = i;
+    // find who holds smallest element of i and its two children
+    if (leftChild < size && heap[leftChild]->frequency < heap[min]->frequency)
+        min = leftChild;
+    if (rightChild < size && heap[rightChild]->frequency < heap[min]->frequency)
+        min = rightChild;
+    // if a child holds smallest element, swap i's element to that child
+    // and recurse.
+    if (min != i) {
+        std::swap(heap[i], heap[min]);
+        swapDown(min, size);
+    }
 }
 
 //Get the index of the left node
@@ -71,4 +78,16 @@ int MaxHeap::parent(int child){
         return i;
     }
     return -1;
+}
+
+//PROVIDED BY THE PROF, DO NOT ALTER
+//Takes an integer and prints it as ASCII character
+void MaxHeap::heapPrintChar( int ch ) {
+    if( ch < 16 ) {
+        std::cout << "x0" << std::hex << ch;
+    } else if( ch < 32 || ch > 126 ) {
+        std::cout << "x" << std::hex << ch;
+    } else {
+        std::cout << "\"" << (char)ch << "\"";
+	}
 }

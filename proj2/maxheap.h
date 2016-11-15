@@ -17,13 +17,13 @@ public:
 private:
 	std::vector<Node *> heap;
 private:
-	void makeMaxHeap();
-	void heapify(int index);
-	void swapDown();
-	void swapUp(int parent, int index);
+	void heapify(int size);
+	void sort(int size);//
+	void swapDown(int i, int size);
 	int parent(int child);
 	int right(int parent);
 	int left(int parent);
+	void heapPrintChar(int ch);
 };
 
 #endif /* MAXHEAP_H */

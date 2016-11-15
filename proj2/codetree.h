@@ -17,7 +17,6 @@ private:
 	MaxHeap heap;
 	void printChar(int ch);
 	void buildPriorityQ(void);
-	void insertSmallestTwo(std::vector<Node*> frequencies, MaxHeap heap);
 public:
 	CodeTree(int freqin[]);
 	~CodeTree();
